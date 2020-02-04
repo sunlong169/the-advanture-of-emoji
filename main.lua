@@ -1,5 +1,5 @@
 debug = true
-local player = {x = 100, y = 280, speed = 300, img = nil}
+local player = {x = 250, y = 280, speed = 300, img = nil}
 stage = {x = 0, y = 0, speed = 300, img = nil}
 
 local time = 0
@@ -10,10 +10,10 @@ local status=1
 local function move(status)
     local data={
         img1=love.graphics.newImage("res/image/player/move1.png"),
-        img2=love.graphics.newImage("res/image/player/move3.png"),
-        img3=love.graphics.newImage("res/image/player/move5.png"),
-        img4=love.graphics.newImage("res/image/player/move7.png"),
-        img5=love.graphics.newImage("res/image/player/move9.png"),
+        img2=love.graphics.newImage("res/image/player/move2.png"),
+        img3=love.graphics.newImage("res/image/player/move3.png"),
+        img4=love.graphics.newImage("res/image/player/move4.png"),
+        img5=love.graphics.newImage("res/image/player/move5.png"),
 
     }
     if status==1 then
@@ -22,7 +22,7 @@ local function move(status)
     if status==2 then
         return data.img3
      end
-     if status==3 then
+     if status==3 then 
         return data.img3
      end
      if status==4 then
@@ -71,7 +71,6 @@ end
 
 function love.update(dt)
 
-    
     if love.keyboard.isDown('escape') then
         
         love.event.push('quit')
@@ -89,11 +88,17 @@ function love.update(dt)
            status=1
         end
         
-
-         stage.x = stage.x - (stage.speed * dt)
+        if stage.x > -(2400-800) and player.x>300 then
+        stage.x = stage.x - (stage.speed * dt)
+        else if stage.x<(2400-800) and player.x<800 or player.x<300 then 
+             player.x = player.x + (stage.speed * dt)
+             end
+                    
+        end
          player.img = move(status)
          
     end
+
 
     if love.keyboard.isDown('left', 'a') then
         time = time + dt
@@ -106,16 +111,30 @@ function love.update(dt)
         if status==6 then
            status=1
         end
+        
+        if  (stage.x < 0 and player.x<=300) then
         stage.x = stage.x + (stage.speed * dt)
+        else if ( stage.x >= 0 and player.x>0 ) or( player.x<=300 and player.x>0 ) or player.x>300 then 
+                 player.x = player.x - (stage.speed * dt)
+             end
+            
+        end
+      
+        
         player.img = move(status)
     end
 
+  
+ 
 end
-
-
 
 function love.draw()
     love.graphics.draw(stage.img, stage.x, stage.y)
-    love.graphics.draw(player.img, player.x, player.y,0,0.5,0.5)
-    
+    love.graphics.draw(player.img, player.x, player.y,0,7/21,7/21)
+    love.graphics.print(stage.x)
 end
+ 
+
+
+
+
