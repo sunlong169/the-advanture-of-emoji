@@ -26,6 +26,14 @@ function Transform:Constructor(gameObject, parent)
     self.m_childList = ArrayList.New()
 end
 
+---被销毁事件
+function Transform:OnDestroy()
+    ---销毁所有子物体
+    for _, trans in ipairs(self.m_childList) do
+        GameObject.Destroy(trans.gameObject)
+    end
+end
+
 function Transform:__draw()
     for index, value in ipairs(self.m_childList) do
         value.gameObject:__draw()

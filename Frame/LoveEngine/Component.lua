@@ -13,10 +13,17 @@ function Component:Constructor(gameObject)
     self.gameObject = gameObject
     self.transform = gameObject.transform
 
+    --订阅帧更新
+    self.m_updateEvent = function(dt)
+        self:Update(dt)
+    end
+    Scene.__addUpdateEvent(self.m_updateEvent)
 end
 
 --析构
 function Component:Destructor()
+    --取消订阅帧更新
+    Scene.__removeUpdateEvent(self.m_updateEvent)
 end
 
 --设置开启与关闭
@@ -27,9 +34,11 @@ function Component:SetEnabled(bol)
     if self.m_enable == true and last == false then
         --激活
         self:OnEnable()
+        Scene.__addUpdateEvent(self.m_updateEvent)
     elseif self.m_enable == false and last == true then
         --反激活
         self:OnDisable()
+        Scene.__removeUpdateEvent(self.m_updateEvent)
     end
 end
 
@@ -52,7 +61,10 @@ end
 function Component:Update(dt)
 
 end
+---销毁事件
+function Component:OnDestroy()
 
+end
 ---绘图事件
 function Component:__draw()
 

@@ -6,20 +6,11 @@
 local Image, base = extends(Component, "Image")
 
 function Image:Constructor()
-    self.m_size = Size.New()
     self.sprite = nil
 end
 
---size暂时没用
-function Image:GetSize()
-    return self.m_size
-end
-function Image:SetSize(size)
-    self.m_size = size
-end
-
-function Image:SetSprite(path)
-    self.sprite = love.graphics.newImage(path)
+function Image:SetSprite(value)
+    self.sprite = value
 end
 
 function Image:Update(dt)

@@ -16,6 +16,7 @@ end
 function Logger:Error(info)
     Console.WriteLine("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=")
     Console.WriteLine(String.Format("[Error][{0}] {1}", DateTime.Now(), info))
+    Console.WriteLine(debug.traceback())
     Console.WriteLine("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=")
 end
 

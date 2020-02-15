@@ -5,8 +5,12 @@
 ------------------------------------------------
 local ArrayList, base = extends(Object, "ArrayList")
 
-function ArrayList:Constructor()
-
+function ArrayList:Constructor(tb)
+    if tb then
+        for _, value in ipairs(tb) do
+            self:Add(value)
+        end
+    end
 end
 
 function ArrayList:Get(index)

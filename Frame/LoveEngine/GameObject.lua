@@ -19,7 +19,6 @@ end
 
 ---销毁场景中的物体
 function GameObject.Destroy(gameObject)
-    Scene.m_GlobalGameObject:Remove(gameObject)
     delete(gameObject)
 end
 
@@ -28,12 +27,24 @@ function GameObject:Constructor(name, parent)
     self.name = name or "GameObject"
     self.active = true
 
-    
     self.m_componentList = ArrayList.New()
-
     self.transform = self:AddComponent(Transform, parent)
 
     Scene.m_GlobalGameObject:Add(self)
+end
+
+--析构
+function GameObject:Destructor()
+    Scene.m_GlobalGameObject:Remove(self)
+    --先执行一遍事件，然后在对其析构
+    for _, component in ipairs(self.m_componentList) do
+        component:OnDestroy()
+    end
+    for _, component in ipairs(self.m_componentList) do
+        delete(component)
+    end
+
+    self.m_componentList = nil
 end
 
 function GameObject:__draw()
@@ -78,6 +89,7 @@ function GameObject:Update(dt)
     self.m_componentList:ForEach(function(i, v)
         if not v.m_isInit and v.Start then
             v:Start()
+            v.m_isInit = true
         end
         if v.Update and v.m_enable then
             v:Update(dt)
@@ -93,14 +105,14 @@ function GameObject:SetActive(bol)
     if self.active == true and last == false then
         --激活
         self.m_componentList:ForEach(function(i, v)
-            if v.OnEnable then
+            if v.m_enable then
                 v:OnEnable()
             end
         end)
     elseif self.active == false and last == true then
         --反激活
         self.m_componentList:ForEach(function(i, v)
-            if v.OnDisable then
+            if v.m_enable then
                 v:OnDisable()
             end
         end)

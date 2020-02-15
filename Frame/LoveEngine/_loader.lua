@@ -11,6 +11,6 @@ BoxCollider = require ("Frame.LoveEngine.BoxCollider")
 
 --component
 Image       = require ("Frame.LoveEngine.Image")
-
+SeqImage    = require ("Frame.LoveEngine.SeqImage")
 --util
 Logger      = require ("Frame.LoveEngine.Logger")
