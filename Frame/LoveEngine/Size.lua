@@ -13,4 +13,8 @@ function Size:operatorSub(target)
     return Size.New(self.width - target.width, self.height - target.height)
 end
 
+function Size:ToString()
+    return String.Format("[width: {0}, height: {1}]", self.width, self.height)
+end
+
 return Size

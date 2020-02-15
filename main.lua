@@ -121,22 +121,31 @@ function love.update(dt)
              end
             
         end
-      
-        
+
         player.img = move(status)
     end
 
-  
- 
 end
+
 
 function love.draw()
     love.graphics.draw(stage.img, stage.x, stage.y)
-    love.graphics.draw(player.img, player.x, player.y,0,7/21,7/21)
+    love.graphics.draw(player.img, player.x, player.y, 0, 7/21, 7/21)
     love.graphics.print(stage.x)
+    
+    IDraw.__draw()
 end
- 
 
 
+local go = GameObject.New("ccc")
+Console.WriteLine(go.name)
+local img = go:AddComponent(Image)
+Console.WriteLine(go.transform:GetScale())
+img:SetSprite("res/image/player/aaa.jpg")
 
+Scene.m_root:ForEach(function(i,v)
+    Console.WriteLine(v)
+end)
 
+Logger:Debug("bababa")
+Logger:Error("sfasaf")

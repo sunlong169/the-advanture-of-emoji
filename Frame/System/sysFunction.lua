@@ -62,7 +62,7 @@ function extends(base, className)
                     ctor(b.__base, ...)
                 end
                 if b.Constructor then
-                    b:Constructor(...)
+                    b.Constructor(obj, ...)
                 end
             end
             ctor(obj, ...)
