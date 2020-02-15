@@ -8,18 +8,22 @@ function Component:Constructor(gameObject)
 end
 
 function Component:SetEnabled(bol)
+    assert(type(bol) == 'boolean')
+    local last = self.m_enable
     self.m_enable = bol
-    if bol then
-        self:Enable()
-    else
-        self:Disable()
+    if self.m_enable == true and last == false then
+        --激活
+        self:OnEnable()
+    elseif self.m_enable == false and last == true then
+        --反激活
+        self:OnDisable()
     end
 end
 
-function Component:Enable()
+function Component:OnEnable()
     
 end
-function Component:Disable()
+function Component:OnDisable()
 
 end
 

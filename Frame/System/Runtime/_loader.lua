@@ -1,1 +1,1 @@
-Serialization = require (__frameName.."System.Runtime.Serialization")
+Serialization = require ("Frame.System.Runtime.Serialization")

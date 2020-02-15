@@ -1,17 +1,17 @@
-Type      = require (__frameName.."System.Type")
+Type      = require ("Frame.System.Type")
 --SystemClass
-require             (__frameName.."System.sysFunction")
-Object   = require  (__frameName.."System.Object")
-String   = require  (__frameName.."System.String")
+require             ("Frame.System.sysFunction")
+Object   = require  ("Frame.System.Object")
+String   = require  ("Frame.System.String")
 --subNamespace
-require             (__frameName.."System.IO._loader")
-require             (__frameName.."System.Collections._loader")
-require             (__frameName.."System.Runtime._loader")
+require             ("Frame.System.IO._loader")
+require             ("Frame.System.Collections._loader")
+require             ("Frame.System.Runtime._loader")
 
 --nick
 object = Object
 
 --System.Class
-Singleton = require (__frameName.."System.Singleton")
-Console   = require (__frameName.."System.Console")
-Delegate  = require (__frameName.."System.Delegate")
+Singleton = require ("Frame.System.Singleton")
+Console   = require ("Frame.System.Console")
+Delegate  = require ("Frame.System.Delegate")

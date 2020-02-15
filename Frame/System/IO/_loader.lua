@@ -1,1 +1,1 @@
-File    = require (__frameName.."System.IO.File")
+File    = require ("Frame.System.IO.File")

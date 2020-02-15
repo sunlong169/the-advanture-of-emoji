@@ -6,6 +6,9 @@ function Type.New(name, protoType)
     tmp.__classType = classType.Instance
     tmp.__protoType = protoType
 
+    tmp.CreateInstance = function(self, ...)
+        return tmp.__protoType.New(...)
+    end
     tmp.GetName = function(self)
         assert(self ~= nil and self.__classType == classType.Instance, "该方法为实例方法")
         return self.name
