@@ -1,3 +1,5 @@
+require "Frame._loader"
+
 debug = true
 local player = {x = 250, y = 280, speed = 300, img = nil}
 stage = {x = 0, y = 0, speed = 300, img = nil}
@@ -138,7 +140,3 @@ end
 
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> c1aec10a3bca312883cb0e171f12b3dde439ae14

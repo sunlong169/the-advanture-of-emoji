@@ -1,0 +1,5 @@
+ArrayList   = require (__frameName.."System.Collections.ArrayList")
+List        = require (__frameName.."System.Collections.List")
+Dictionary  = require (__frameName.."System.Collections.Dictionary")
+Stack       = require (__frameName.."System.Collections.Stack")
+Queue       = require (__frameName.."System.Collections.Queue")
