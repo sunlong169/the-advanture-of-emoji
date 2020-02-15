@@ -1,5 +1,11 @@
+-------------------ModuleInfo-------------------
+--- Author       : jx
+--- Date         : 2020/02/15 23:57
+--- Description  : 字符串处理
+------------------------------------------------
 local String = {}
 
+---字符串切割
 function String.Split(input, delimiter)
     input = tostring(input)
     delimiter = tostring(delimiter)
@@ -13,22 +19,27 @@ function String.Split(input, delimiter)
     return arr
 end
 
+---替换字符串
 function String.Replace(str, findStr, targetStr)
     return string.gsub(str, findStr, targetStr)
 end
 
+---清除空格
 function String.Trim(str)
     return string.gsub(str, "^%s*(.-)%s*$", "%1")
 end
 
+---转换为小写
 function String.ToLower(str)
     return string.lower(str)
 end
 
+---转换为大写
 function String.ToUpper(str)
     return string.upper(str)
 end
 
+---字符串格式化
 function String.Format(str, ...)
     local parms = {...}
     local result = str

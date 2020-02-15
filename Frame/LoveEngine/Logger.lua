@@ -1,3 +1,8 @@
+-------------------ModuleInfo-------------------
+--- Author       : jx
+--- Date         : 2020/02/15 23:45
+--- Description  : 日志管理器
+------------------------------------------------
 local Logger = {}
 
 function Logger:Debug(info)

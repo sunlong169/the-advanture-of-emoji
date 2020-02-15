@@ -1,10 +1,14 @@
+-------------------ModuleInfo-------------------
+--- Author       : jx
+--- Date         : 2020/02/16 00:00
+--- Description  : 数组封装类，可以用lua迭代器访问
+------------------------------------------------
 local ArrayList, base = extends(Object, "ArrayList")
 
 function ArrayList:Constructor()
 
 end
 
----@return ArrayItem
 function ArrayList:Get(index)
     return self[index]
 end

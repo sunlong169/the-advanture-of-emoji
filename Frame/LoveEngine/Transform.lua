@@ -1,5 +1,9 @@
+-------------------ModuleInfo-------------------
+--- Author       : jx
+--- Date         : 2020/02/15 23:45
+--- Description  : 储存位置 旋转 缩放 父对象与子对象等数据
+------------------------------------------------
 local Transform, base = extends(Component, "Transform")
-
 
 function Transform:Constructor(gameObject, parent)
     

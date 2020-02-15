@@ -1,3 +1,8 @@
+-------------------ModuleInfo-------------------
+--- Author       : jx
+--- Date         : 2020/02/15 23:44
+--- Description  : 游戏物体对象
+------------------------------------------------
 local GameObject, base = extends(Object, "GameObject")
 
 ---获取场景内的物体

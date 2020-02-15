@@ -1,4 +1,8 @@
----绘图接口
+-------------------ModuleInfo-------------------
+--- Author       : jx
+--- Date         : 2020/02/15 23:38
+--- Description  : 绘图接口
+------------------------------------------------
 local IDraw = {}
 local drawEvent = ArrayList.New()
 

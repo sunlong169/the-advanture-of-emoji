@@ -1,5 +1,4 @@
 ArrayList   = require ("Frame.System.Collections.ArrayList")
-List        = require ("Frame.System.Collections.List")
 Dictionary  = require ("Frame.System.Collections.Dictionary")
 Stack       = require ("Frame.System.Collections.Stack")
 Queue       = require ("Frame.System.Collections.Queue")

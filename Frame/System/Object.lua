@@ -1,3 +1,8 @@
+-------------------ModuleInfo-------------------
+--- Author       : jx
+--- Date         : 2020/02/15 23:58
+--- Description  : 所有类的基类
+------------------------------------------------
 local Object = {
     __type = Type.New("Object", Object),
     __classType = classType.Class

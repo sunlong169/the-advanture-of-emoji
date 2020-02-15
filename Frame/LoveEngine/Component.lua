@@ -1,3 +1,8 @@
+-------------------ModuleInfo-------------------
+--- Author       : jx
+--- Date         : 2020/02/15 23:46
+--- Description  : 组件类，所有组件都要继承此类
+------------------------------------------------
 local Component, base = extends(Object, "Component")
 
 --构造
@@ -28,22 +33,27 @@ function Component:SetEnabled(bol)
     end
 end
 
+---启用事件
 function Component:OnEnable()
     
 end
 
+---禁用事件
 function Component:OnDisable()
 
 end
 
+---第一次运行事件
 function Component:Start()
 
 end
 
+---帧更新事件
 function Component:Update(dt)
 
 end
 
+---绘图事件
 function Component:__draw()
 
 end

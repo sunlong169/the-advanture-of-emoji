@@ -1,3 +1,8 @@
+-------------------ModuleInfo-------------------
+--- Author       : jx
+--- Date         : 2020/02/15 23:57
+--- Description  : 单例基类
+------------------------------------------------
 local Singleton, base = extends(Object, "Singleton")
 
 function Singleton:Instance()

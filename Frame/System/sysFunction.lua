@@ -1,7 +1,16 @@
+-------------------ModuleInfo-------------------
+--- Author       : jx
+--- Date         : 2020/02/15 23:55
+--- Description  : 基础函数
+------------------------------------------------
+
+---类/实例 枚举
 classType = {
     Class = "Class",
     Instance = "Instance"
 }
+
+--继承
 function extends(base, className)
     local class = {}
     -- assert(type(className) == "string" and #className > 0)
@@ -100,6 +109,7 @@ function extends(base, className)
     return class, base
 end
 
+---析构对象
 function delete(obj)
     local now_base = obj
     while now_base do
@@ -110,6 +120,7 @@ function delete(obj)
     end
 end
 
+---获取类的类型
 function ftypeof(v)
     assert(v ~= nil, "Object nil")
     assert(v.__classType == classType.Class, "只能对类型进行运算")

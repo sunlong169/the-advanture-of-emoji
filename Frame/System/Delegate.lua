@@ -1,3 +1,8 @@
+-------------------ModuleInfo-------------------
+--- Author       : jx
+--- Date         : 2020/02/15 23:58
+--- Description  : 委托（函数指针封装）
+------------------------------------------------
 local Delegate = extends(Object, "Delegate")
 
 function Delegate:Constructor(obj, methodPointer)

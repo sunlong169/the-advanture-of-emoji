@@ -1,3 +1,8 @@
+-------------------ModuleInfo-------------------
+--- Author       : jx
+--- Date         : 2020/02/15 23:55
+--- Description  : 类原型
+------------------------------------------------
 local Type = {}
 
 function Type.New(name, protoType)
