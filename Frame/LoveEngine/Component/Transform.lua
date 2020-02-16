@@ -15,7 +15,7 @@ function Transform:Constructor(gameObject, parent)
     --父对象
     self.parent = parent
     if not self.parent then
-        Scene.m_root:Add(self)
+        SceneManager.GetRoot():Add(self)
     end
 
     self.m_childList = ArrayList.New()
@@ -52,9 +52,9 @@ function Transform:SetParent(parent, isattrib)
             self.m_rotation = self.m_rotation - parent.m_rotation
             self.m_scale = self.m_scale / parent.m_scale
         end
-        Scene.m_root:Remove(self)
+        SceneManager.GetRoot():Remove(self)
     else
-        Scene.m_root:Add(self)
+        SceneManager.GetRoot():Add(self)
     end
 end
 
