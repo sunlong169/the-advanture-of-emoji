@@ -8,6 +8,7 @@ IShape      = require ("Frame.LoveEngine.Interface.IShape")
 Point       = require ("Frame.LoveEngine.Point")
 Size        = require ("Frame.LoveEngine.Size")
 Scene       = require ("Frame.LoveEngine.Scene")
+SceneManager= require ("Frame.LoveEngine.SceneManager")
 GameObject  = require ("Frame.LoveEngine.GameObject")
 
 --component

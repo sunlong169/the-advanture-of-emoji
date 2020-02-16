@@ -7,7 +7,7 @@ local IDraw = {}
 local drawEvent = ArrayList.New()
 
 function IDraw.__draw()
-    Scene.__draw()
+    SceneManager.__draw()
 end
 
 function IDraw.DrawImage(image)

@@ -38,13 +38,16 @@ function Main()
     img:SetSprite(IShape.NewSprite("res/image/player/aaa.jpg"))
 
     go.transform:SetPosition(Point.New(200,120))
+
     go.transform:SetRotation(90)
 
     local role = GameObject.New("go11")
     local img2 = role:AddComponent(Image)
     role.transform:SetPosition(90,90)
     img2:SetSprite(IShape.NewSprite("res/image/player/move1.png"))
+
     role.transform:SetParent(go.transform)
+    
     
     -- role.transform:SetPosition(Point.New(0,0))
     -- role.transform:SetLocalPosition(Point.New(0,0))
