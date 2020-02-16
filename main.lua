@@ -1,13 +1,14 @@
-require "Frame._loader"
 debug = true
 
+require "Frame._loader"
 require "Scripts._loader"
+
 function love.load()
     Main()
 end
 
 function love.update(dt)
-    Scene.__update(dt)
+    SceneManager.__update(dt)
 end
 
 function love.draw()

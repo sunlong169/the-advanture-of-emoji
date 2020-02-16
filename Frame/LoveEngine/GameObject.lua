@@ -8,18 +8,12 @@ local GameObject, base = extends(Object, "GameObject")
 ---获取场景内的物体
 ---@return GameObject
 function GameObject.Find(name)
-    local go = nil
-    Scene.m_GlobalGameObject:ForEach(function(i, v)
-        if v.name == name then
-            go = v
-        end
-    end)
-    return go
+    return SceneManager.FindGameObject(name)
 end
 
 ---销毁场景中的物体
 function GameObject.Destroy(gameObject)
-    delete(gameObject)
+    SceneManager.DestroyGameObject(gameObject)
 end
 
 --构造函数
@@ -31,12 +25,11 @@ function GameObject:Constructor(name, parent)
     self.transform = Transform --此句话仅为了智能提示，没有实际意义
     self.transform = self:AddComponent(Transform, parent)
 
-    Scene.m_GlobalGameObject:Add(self)
+    SceneManager.NewGameObject(self)
 end
 
 --析构
 function GameObject:Destructor()
-    Scene.m_GlobalGameObject:Remove(self)
     --先执行一遍事件，然后在对其析构
     for _, component in ipairs(self.m_componentList) do
         component:OnDestroy()

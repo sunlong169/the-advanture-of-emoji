@@ -15,8 +15,8 @@ File        = require ("Frame.System.IO.File")
 --Runtime
 Serialization = require ("Frame.System.Runtime.Serialization")
 --Timers
-TimeSystem    = require ("Frame.System.Timers.TimeSystem")
-Timer         = require ("Frame.System.Timers.Timer")
+-- TimeSystem    = require ("Frame.System.Timers.TimeSystem")
+-- Timer         = require ("Frame.System.Timers.Timer")
 
 --System.Class
 Singleton = require ("Frame.System.Singleton")

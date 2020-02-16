@@ -10,7 +10,22 @@ local m_curScene = nil
 local m_sceneChangeEvents = ArrayList.New()
 
 function SceneManager.__Init()
-    m_curScene = Scene.New()
+
+end
+
+function SceneManager.NewGameObject(gameObject)
+    m_curScene.m_GlobalGameObject:Add(gameObject)
+end
+function SceneManager.FindGameObject(name)
+    for index, value in ipairs(m_curScene.m_GlobalGameObject) do
+        if value.name == name then
+            return value
+        end
+    end 
+end
+function SceneManager.DestroyGameObject(gameObject)
+    m_curScene.m_GlobalGameObject:Remove(gameObject)
+    delete(gameObject)
 end
 
 ---切换场景
@@ -28,6 +43,9 @@ function SceneManager.ChangeScene(scene)
     m_curScene:OnEnter()
 end
 
+function SceneManager.GetRoot()
+    return m_curScene.m_root
+end
 
 function SceneManager.__update(dt)
     if m_curScene then
@@ -57,3 +75,5 @@ end
 function SceneManager.__removeSceneChangeEvent(func)
     m_sceneChangeEvents:Remove(func)
 end
+
+return SceneManager
