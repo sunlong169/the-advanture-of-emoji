@@ -38,7 +38,7 @@ function Scene:OnExit()
 end
 ---virtual 帧更新事件，落后于update
 function Scene:LateUpdate(dt)
-
+    Console.WriteLine(dt)
 end
 
 return Scene01

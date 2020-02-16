@@ -36,7 +36,7 @@ function Scene:__update(dt)
     for _, component in ipairs(self.m_updateList) do
         component(dt)
     end
-    self:LateUpdate()
+    self:LateUpdate(dt)
 end
 
 ---virtual 进入场景
