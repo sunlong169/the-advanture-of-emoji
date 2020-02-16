@@ -34,7 +34,7 @@ function Input.GetMouseUp(mouseType)
 end
 
 ---获取鼠标位置
-function Input:GetMousePosition()
+function Input.GetMousePosition()
     local x, y = love.mouse.getPosition()
     return Point.New(x, y)
 end

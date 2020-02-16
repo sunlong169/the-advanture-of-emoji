@@ -12,11 +12,6 @@ function Transform:Constructor(gameObject, parent)
     self.m_rotation = 0
     self.m_scale    = Point.New(1, 1)
 
-    --偏移
-    self.m_offset_position = Point.New()
-    self.m_offset_rotation = 0
-    self.m_offset_scale    = Point.New(1, 1)
-
     --父对象
     self.parent = parent
     if not self.parent then
@@ -41,7 +36,9 @@ function Transform:__draw()
 end
 
 ---设置父对象
-function Transform:SetParent(parent)
+---@param parent Transform 父对象
+---@param isattrib boolean 属性是否重置，默认不重置
+function Transform:SetParent(parent, isattrib)
     if self.parent then
         self.parent.m_childList:Remove(self)
     end
@@ -49,7 +46,12 @@ function Transform:SetParent(parent)
     if parent then
         self.parent = parent
         parent.m_childList:Add(self)
-
+        --计算移动偏移
+        if not isattrib then
+            self.m_position = self.m_position - parent.m_position
+            self.m_rotation = self.m_rotation - parent.m_rotation
+            self.m_scale = self.m_scale / parent.m_scale
+        end
         Scene.m_root:Remove(self)
     else
         Scene.m_root:Add(self)
@@ -58,22 +60,23 @@ end
 
 ---设置相对位置
 function Transform:SetLocalPosition(position)
-    self.m_offset_position = position
-
-    self.m_position = self.LocalToWorld(self)
+    self.m_position = position
 end
 ---获取相对位置
 function Transform:GetLocalPosition()
-    return self.m_offset_position
+    return self.m_position
 end
 
 ---设置位置
-function Transform:SetPosition(position)
-    self.m_position = position
+function Transform:SetPosition(position, y)
+    if y then
+        position = Point.New(position, y)
+    end
+    self.m_position = self.WorldToLocal(self, position)
 end
 ---获取位置
 function Transform:GetPosition()
-    return self.m_position
+    return self.LocalToWorld(self)
 end
 
 ---设置相对旋转
@@ -149,37 +152,32 @@ end
 ----------------------------------static---------------------------------
 
 function Transform.LocalToWorld(transform)
-    if transform.parent then
-        local parent = transform.parent
-        local result = Point.New()
-        while parent do 
-            result = result + parent.m_offset_position
-            --顶级对象
-            if not parent.parent then
-                result = result + parent.m_position
-                break
-            end
-
+    local getParentPosition
+    getParentPosition = function(transf)
+        if transf.parent then
+            return transf.m_position + getParentPosition(transf.parent)
+        else
+            return transf.m_position
         end
-    else
-        return transform.m_position
     end
-
+    local result = getParentPosition(transform)
+    return result
 end
 
-function Transform.WorldToLocal(gameObject, point)
-    if gameObject.parent then
-        local parent = gameObject.parent
-        local result = Transform.New()
+function Transform.WorldToLocal(transform, point)
 
-        while parent do
-            result = result + parent.m_position
-            parent = parent.parent
+    local getParentPosition
+    getParentPosition = function(transf, point)
+        if transf.parent then
+            point = point - getParentPosition(transf.parent, point)
+            return point
+        else
+            return point
         end
-        return result
-    else
-        return gameObject.transform.m_position
     end
+    local result = getParentPosition(transform, point )
+    return result
+
 end
 
 

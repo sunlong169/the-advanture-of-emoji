@@ -108,7 +108,7 @@ function delete(obj)
 end
 
 ---获取类的类型
-function ftypeof(v)
+function gettype(v)
     assert(v ~= nil, "Object nil")
     assert(v.__classType == classType.Class, "只能对类型进行运算")
     return v.__type

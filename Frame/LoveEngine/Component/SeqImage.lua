@@ -17,7 +17,9 @@ function SeqImage:Constructor()
 end
 
 function SeqImage:Start()
-
+    if #self.m_sprites > 0 then
+        self:SetSprite(self.m_sprites[1])
+    end
 end
 
 ---序列图
@@ -63,6 +65,7 @@ function SeqImage:Update(dt)
             self.m_curIndex = 1
         end
         self:SetSprite(self.m_sprites[self.m_curIndex])
+        self.m_curIndex = self.m_curIndex + 1
         self:_loop()
         self.m_timeCount = 0
     end

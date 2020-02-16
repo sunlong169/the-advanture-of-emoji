@@ -11,10 +11,15 @@ function Component:Constructor(gameObject)
     self.m_enable = true
 
     self.gameObject = gameObject
+    self.transform = Transform --此句话仅为了智能提示，没有实际意义
     self.transform = gameObject.transform
 
     --订阅帧更新
     self.m_updateEvent = function(dt)
+        if not self.m_isInit then
+            self:Start()
+            self.m_isInit = true
+        end
         self:Update(dt)
     end
     Scene.__addUpdateEvent(self.m_updateEvent)

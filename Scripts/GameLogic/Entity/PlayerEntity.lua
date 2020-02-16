@@ -15,9 +15,12 @@ function PlayerEntity:Constructor()
         IShape.NewSprite("res/image/player/move4.png"),
         IShape.NewSprite("res/image/player/move5.png"),
     })
-    self.seqimg:Play()
+    -- self.seqimg:Play()
+    self.move = self.gameObject:AddComponent(Move)
     
 end
+
+
 
 function PlayerEntity:Destructor()
     GameObject.Destroy(self.gameObject)

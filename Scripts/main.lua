@@ -31,11 +31,22 @@ function Main()
     bgImg:SetSprite(IShape.NewSprite("res/image/stage/test-stage.png"))
 
     --生成玩家实体
-    EntityMgr:Instance():CreateEntity(EntityType.player)
+    -- EntityMgr:Instance():CreateEntity(EntityType.player)
 
-    -- local go = GameObject.New()
-    -- local img = go:AddComponent(Image)
-    -- img:SetSprite(IShape.NewSprite("res/image/player/aaa.jpg"))
+    local go = GameObject.New("test")
+    local img = go:AddComponent(Image)
+    img:SetSprite(IShape.NewSprite("res/image/player/aaa.jpg"))
+
+    go.transform:SetPosition(Point.New(200,120))
+    go.transform:SetRotation(90)
+
+    local role = GameObject.New("go11")
+    local img2 = role:AddComponent(Image)
+    img2:SetSprite(IShape.NewSprite("res/image/player/move1.png"))
+    role.transform:SetParent(go.transform)
+
+    -- role.transform:SetPosition(Point.New(0,0))
+    -- role.transform:SetLocalPosition(Point.New(0,0))
 end
 
 

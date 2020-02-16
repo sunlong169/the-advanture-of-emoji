@@ -21,7 +21,6 @@ function Type.New(name, protoType)
     tmp.Equals = function(self, targetType)
         return self.name == targetType.name
     end
-
     tmp.ToString = function(self)
         return self.name
     end
@@ -34,6 +33,13 @@ function Type.New(name, protoType)
         return methodInfo
     end
 
+    local metaTb = {
+        __eq = function(a, b)
+            return a.name == b.name
+        end
+    }
+    
+    setmetatable(tmp, metaTb)
     return tmp
 end
 

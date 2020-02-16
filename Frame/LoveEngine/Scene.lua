@@ -9,15 +9,12 @@ local Scene = {}
 Scene.m_GlobalGameObject = ArrayList.New()
 ---渲染的根节点
 Scene.m_root = ArrayList.New()
----参数更新的列表
+---帧更新的列表
 Scene.m_updateList = ArrayList.New()
 
-function Scene:Constructor()
-
-end
 ---绘制场景
 function Scene.__draw()
-    --通知所有顶层gameObject，顶层gameObject通知transform，transform通知所有子gameObject 以此迭代绘制
+    --通知所有顶层gameObject，顶层gameObject通知transform，transform通知所有子gameObject 以此绘制
     for _, trans in ipairs(Scene.m_root) do
         trans.gameObject:__draw()
     end

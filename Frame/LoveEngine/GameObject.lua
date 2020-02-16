@@ -28,6 +28,7 @@ function GameObject:Constructor(name, parent)
     self.active = true
 
     self.m_componentList = ArrayList.New()
+    self.transform = Transform --此句话仅为了智能提示，没有实际意义
     self.transform = self:AddComponent(Transform, parent)
 
     Scene.m_GlobalGameObject:Add(self)
@@ -47,16 +48,22 @@ function GameObject:Destructor()
     self.m_componentList = nil
 end
 
+---渲染游戏物体
 function GameObject:__draw()
-    for _, value in ipairs(self.m_componentList) do
-        value:__draw()
+    for index, value in ipairs(self.m_componentList) do
+        --跳过transform，最后渲染
+        if index ~= 1 then
+            value:__draw()
+        end
     end
+    --最后transform渲染子物体
+    self.m_componentList[1]:__draw()
 end
 
 ---添加组件
 function GameObject:AddComponent(componentType, ...)
     ---@type Type
-    local comtype = ftypeof(componentType)
+    local comtype = gettype(componentType)
     local component = comtype:CreateInstance(self, ...)
     self.m_componentList:Add(component)
     return component
@@ -65,8 +72,8 @@ end
 ---移除组件
 function GameObject:RemoveComponent(componentType)
     for index, value in ipairs(self.m_componentList) do
-        if ftypeof(value) == componentType then
-            self.m_componentList:Remove(v)
+        if value:GetType() == gettype(componentType) then
+            self.m_componentList:Remove(value)
             return
         end
     end
@@ -76,26 +83,15 @@ end
 ---@return Component
 function GameObject:GetComponent(componentType)
     local component = nil
-    self.m_componentList:ForEach(function(i, v)
-        if ftypeof(v) == componentType then
-            component = v
+    for index, value in ipairs(self.m_componentList) do
+        if value:GetType() == gettype(componentType) then
+            component = value
+            break
         end
-    end)
+    end
     return component
 end
 
---override
-function GameObject:Update(dt)
-    self.m_componentList:ForEach(function(i, v)
-        if not v.m_isInit and v.Start then
-            v:Start()
-            v.m_isInit = true
-        end
-        if v.Update and v.m_enable then
-            v:Update(dt)
-        end
-    end)
-end
 
 ---激活状态
 function GameObject:SetActive(bol)
