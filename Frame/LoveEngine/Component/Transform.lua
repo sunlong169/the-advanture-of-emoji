@@ -76,7 +76,7 @@ function Transform:SetPosition(position, y)
 end
 ---获取位置
 function Transform:GetPosition()
-    return self.LocalToWorld(self)
+    return self.LocalToWorld(self, 'position')
 end
 
 ---设置相对旋转
@@ -89,29 +89,29 @@ function Transform:GetLocalRotation()
 end
 ---设置旋转
 function Transform:SetRotation(rotation)
-    self.m_rotation = rotation
+    self.m_rotation = self.WorldToLocal(self, rotation)
 end
 ---获取旋转
 function Transform:GetRotation()
-    return self.m_rotation
+    return self.LocalToWorld(self, 'rotation')
 end
 
 
 ---设置相对缩放
-function Transform:SetLocalScale(size)
-    self.m_scale = size
+function Transform:SetLocalScale(scale)
+    self.m_scale = scale
 end
 ---获取相对缩放
 function Transform:GetLocalScale()
     return self.m_scale
 end
 ---设置缩放
-function Transform:SetScale(size)
-    self.m_scale = size
+function Transform:SetScale(scale)
+    self.m_scale = self.WorldToLocal(self, scale)
 end
 ---获取缩放
 function Transform:GetScale()
-    return self.m_scale
+    return self.LocalToWorld(self, 'scale')
 end
 
 ---获取所有子物体
@@ -151,13 +151,25 @@ end
 
 ----------------------------------static---------------------------------
 
-function Transform.LocalToWorld(transform)
+function Transform.LocalToWorld(transform, attribType)
     local getParentPosition
     getParentPosition = function(transf)
         if transf.parent then
-            return transf.m_position + getParentPosition(transf.parent)
+            if attribType == "position" then
+                return transf.m_position + getParentPosition(transf.parent)
+            elseif attribType == "rotation" then
+                return transf.m_rotation + getParentPosition(transf.parent)
+            elseif attribType == "scale" then
+                return transf.m_scale * getParentPosition(transf.parent)
+            end
         else
-            return transf.m_position
+            if attribType == "position" then
+                return transf.m_position
+            elseif attribType == "rotation" then
+                return transf.m_rotation
+            elseif attribType == "scale" then
+                return transf.m_scale
+            end
         end
     end
     local result = getParentPosition(transform)
@@ -177,7 +189,6 @@ function Transform.WorldToLocal(transform, point)
     end
     local result = getParentPosition(transform, point )
     return result
-
 end
 
 
