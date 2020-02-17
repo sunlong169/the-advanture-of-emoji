@@ -32,6 +32,8 @@ end
 function GameObject:Destructor()
     --先执行一遍事件，然后在对其析构
     for _, component in ipairs(self.m_componentList) do
+        --为了取消订阅update
+        component:SetEnabled(false)
         component:OnDestroy()
     end
     for _, component in ipairs(self.m_componentList) do

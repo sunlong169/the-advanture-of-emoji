@@ -12,6 +12,14 @@ function Scene:Constructor()
     self.m_root = ArrayList.New()
     ---帧更新的列表
     self.m_updateList = ArrayList.New()
+    --场景内的碰撞信息
+    self.m_colliderInfo = ArrayList.New()
+end
+
+function Scene:Destructor()
+    for index, value in ipairs(self.m_root) do
+        delete(value)
+    end
 end
 
 ---绘制场景
@@ -29,6 +37,13 @@ end
 ---取消订阅帧更新事件
 function Scene:__removeUpdateEvent(func)
     self.m_updateList:Remove(func)
+end
+---添加移除碰撞信息
+function Scene:__addSceneColliderInfo(collider)
+    self.m_colliderInfo:Add(collider)
+end
+function Scene:__removeSceneColliderInfo(collider)
+    self.m_colliderInfo:Remove(collider)
 end
 
 ---通知所有订阅进行帧更新
