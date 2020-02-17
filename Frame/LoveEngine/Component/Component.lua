@@ -8,7 +8,7 @@ local Component, base = extends(Object, "Component")
 --构造
 function Component:Constructor(gameObject)
     self.m_isInit = false
-    self.m_enable = true
+    self.m_enable = false
 
     self.gameObject = gameObject
     self.transform = Transform --此句话仅为了智能提示，没有实际意义
@@ -22,13 +22,11 @@ function Component:Constructor(gameObject)
         end
         self:Update(dt)
     end
-    SceneManager.__addUpdateEvent(self.m_updateEvent)
+    self:SetEnabled(true)
 end
 
 --析构
 function Component:Destructor()
-    --取消订阅帧更新
-    SceneManager.__removeUpdateEvent(self.m_updateEvent)
 end
 
 --设置开启与关闭
@@ -72,6 +70,18 @@ function Component:OnDestroy()
 end
 ---绘图事件
 function Component:__draw()
+
+end
+---碰撞进入
+function Component:OnColliderEnter()
+
+end
+---碰撞离开
+function Component:OnColliderExit()
+
+end
+---碰撞穿透悬浮
+function Component:OnColliderOver()
 
 end
 

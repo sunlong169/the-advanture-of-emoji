@@ -9,13 +9,14 @@ local SceneManager = {}
 local m_curScene = nil
 local m_sceneChangeEvents = ArrayList.New()
 
-function SceneManager.__Init()
+function SceneManager.__Init(scenesConfig)
 
 end
-
+---新建游戏物体
 function SceneManager.NewGameObject(gameObject)
     m_curScene.m_GlobalGameObject:Add(gameObject)
 end
+---查找游戏对象
 function SceneManager.FindGameObject(name)
     for index, value in ipairs(m_curScene.m_GlobalGameObject) do
         if value.name == name then
@@ -23,6 +24,7 @@ function SceneManager.FindGameObject(name)
         end
     end 
 end
+---销毁游戏对象
 function SceneManager.DestroyGameObject(gameObject)
     m_curScene.m_GlobalGameObject:Remove(gameObject)
     delete(gameObject)
@@ -42,17 +44,17 @@ function SceneManager.ChangeScene(scene)
     m_curScene = scene
     m_curScene:OnEnter()
 end
-
+---获取场景节点根
 function SceneManager.GetRoot()
     return m_curScene.m_root
 end
-
+---帧更新
 function SceneManager.__update(dt)
     if m_curScene then
         m_curScene:__update(dt)
     end
 end
-
+--绘图
 function SceneManager.__draw()
     if m_curScene then
         m_curScene:__draw()
@@ -74,6 +76,17 @@ function SceneManager.__addSceneChangeEvent(func)
 end
 function SceneManager.__removeSceneChangeEvent(func)
     m_sceneChangeEvents:Remove(func)
+end
+---获取当前场景对象
+function SceneManager.GetCurrentScene()
+    return m_curScene
+end
+---添加移除碰撞信息
+function SceneManager.__addSceneColliderInfo(collider)
+    m_curScene:__addSceneColliderInfo(collider)
+end
+function SceneManager.__removeSceneColliderInfo(collider)
+    m_curScene:__removeSceneColliderInfo(collider)
 end
 
 return SceneManager

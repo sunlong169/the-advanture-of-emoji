@@ -6,8 +6,7 @@
 local Transform, base = extends(Component, "Transform")
 
 function Transform:Constructor(gameObject, parent)
-    
-    --世界
+    --本地坐标
     self.m_position = Point.New()
     self.m_rotation = 0
     self.m_scale    = Point.New(1, 1)
