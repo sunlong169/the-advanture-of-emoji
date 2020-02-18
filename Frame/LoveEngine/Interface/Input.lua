@@ -5,13 +5,28 @@
 ------------------------------------------------
 local Input = {}
 
+--配置文件
+local InputAxis = {
+    Horizontal = {
+        NegativeButton = KeyCode.left,
+        PositiveButton = KeyCode.right,
+        AltNegativeButton = KeyCode.a,
+        AltPositiveButton = KeyCode.d,
+        Gravity = 3,
+    }
+}
 
+--记录键盘状态的字典
 local keyState = Dictionary.New()
+local axisState = Dictionary.New()
 
 function Input.Init()
     --添加所有按键到按键状态列表，记录是否按下
-    for _, key in ipairs(KeyCode) do
-        keyState:Add(key, 0) -- 0 默认， 1 刚按下， 2 已经按下， 3 弹起
+    for _, keyc in pairs(KeyCode) do
+        keyState:Add(keyc, 0) -- 0 默认， 1 刚按下， 2 已经按下， 3 弹起
+    end
+    for _, axis in pairs(InputAxis) do
+        axisState:Add(axisState, 0)
     end
 end
 
@@ -20,49 +35,53 @@ function Input.__inputKey()
     keyState:ForEach(function(keyc, downState)
         if love.keyboard.isDown(keyc) then
             --按下
+            
             if downState == 0 then --刚刚按下
                 keyState[keyc] = 1
             elseif downState == 1 then
                 keyState[keyc] = 2
             end
+            
         else
             --按键已经没有在按下了
             --如果上一帧已经按下 那就修改为弹起
             --如果上一帧为弹起，那就修改为默认
-            if downState == 2 then 
-                downState = 3
-            else
-                downState = 0
+            if downState == 1 or downState == 2 then 
+                keyState[keyc] = 3
+            elseif downState == 3 then
+                keyState[keyc] = 0
             end
         end
     end)
 end
 
 --键盘按下回调
-function Input.keyboardEvent(keyCode)
+function Input.keyboardDownEvent(keyCode)
     
 end
 
+--=-----------------------------------------------------
+
 function Input.__update(dt)
     Input.__inputKey() -- 检测键盘
-    for key, value in pairs(InputConfig) do
-        -- body
+    for key, value in pairs(InputAxis) do
+        if Input.GetKey(value.NegativeButton) or Input.GetKey(value.AltNegativeButton) then
+            --负方向按住
+        elseif Input.GetKey(value.PositiveButton) or Input.GetKey(value.AltPositiveButton) then
+            --正方向按住
+        else
+            --归零
+        end
     end
 end
 
---=-----------------------------------------------------
---配置文件
-local InputConfig = {
-    Horizontal = {
-        NegativeButton = Key.left,
-        PositiveButton = Key.right,
-        AltNegativeButton = Key.a,
-        AltPositiveButton = Key.d,
-        Gravity = 3,
-    }
-}
+function Input.GetAxis(axisName)
+    
+end
+
 ---获取按键是否按下
 function Input.GetKey(keyCode)
+    if not keyCode then return false end
     local num = keyState[keyCode]
     --刚按下或已经按下
     return num == 1 or num == 2
