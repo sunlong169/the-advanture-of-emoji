@@ -55,8 +55,19 @@ function SceneManager.__update(dt)
         m_curScene:__update(dt)
     end
 end
+
+---获取与设置主摄像机
+function SceneManager.GetCurrentCamera()
+    return m_curScene:GetCurrentCamera()
+end
+function SceneManager.SetCurrentCamera(camera)
+    m_curScene:SetCurrentCamera (camera)
+end
+
+
 --绘图
 function SceneManager.__draw()
+    --交给场景内的主摄像机渲染
     if m_curScene then
         m_curScene:__draw()
     end

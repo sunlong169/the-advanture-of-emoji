@@ -5,8 +5,9 @@
 ------------------------------------------------
 local Scene, base = extends(Object, "Scene")
 
-function Scene:Constructor()
+function Scene:Constructor(name)
     ---场景内所有的游戏物体
+    self.name = name or "newScene"
     self.m_GlobalGameObject = ArrayList.New()
     ---渲染的根节点
     self.m_root = ArrayList.New()
@@ -14,6 +15,9 @@ function Scene:Constructor()
     self.m_updateList = ArrayList.New()
     --场景内的碰撞信息
     self.m_colliderInfo = ArrayList.New()
+    --当前摄像机
+    self.m_camera = Camera --仅为智能提示赋值
+    self.m_camera = nil
 end
 
 function Scene:Destructor()
@@ -22,8 +26,21 @@ function Scene:Destructor()
     end
 end
 
+---获取和设置当前摄像机
+function Scene:GetCurrentCamera()
+    return self.m_camera
+end
+function Scene:SetCurrentCamera(camera)
+    self.m_camera = camera
+end
+
 ---绘制场景
 function Scene:__draw()
+    --没有摄像机
+    if not self.m_camera then
+        IEngine.Print("no camera in "..self.name)
+        return
+    end
     --通知所有顶层gameObject，顶层gameObject通知transform，transform通知所有子gameObject 以此绘制
     for _, trans in ipairs(self.m_root) do
         trans.gameObject:__draw()

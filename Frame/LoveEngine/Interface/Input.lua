@@ -5,19 +5,52 @@
 ------------------------------------------------
 local Input = {}
 
+--输入类型
+local InputType = {
+    --按键或鼠标按键
+    KeyOrMouseButton = 0,
+    --鼠标（移动或滚轮）
+    MouseMovememt = 1,
+}
+
+local MouseCode = {
+    Left = "l",
+    Right = "r",
+    Middle = "m"
+}
+--仅InputType在MouseMovememt时生效
+local AxisType = {
+    Xaxis = 0,
+    Yaxis = 1,
+    Scrollwheel = 2,
+}
 --配置文件
 local InputAxis = {
     Horizontal = {
+        --反向
         NegativeButton = KeyCode.left,
+        --正向
         PositiveButton = KeyCode.right,
+        --反向2
         AltNegativeButton = KeyCode.a,
+        --正向2
         AltPositiveButton = KeyCode.d,
+        --重力
         Gravity = 3,
+        --灵敏度
+        Sensitivity = 3,
+        --翻转
+        Invert = false,
+        --输入类型
+        Type = InputType.KeyOrMouseButton,
+        --鼠标输入类型
+        Axis = AxisType.Xaxis
     }
 }
 
 --记录键盘状态的字典
 local keyState = Dictionary.New()
+--记录axis状态
 local axisState = Dictionary.New()
 
 function Input.Init()
@@ -25,8 +58,8 @@ function Input.Init()
     for _, keyc in pairs(KeyCode) do
         keyState:Add(keyc, 0) -- 0 默认， 1 刚按下， 2 已经按下， 3 弹起
     end
-    for _, axis in pairs(InputAxis) do
-        axisState:Add(axisState, 0)
+    for axisName, axis in pairs(InputAxis) do
+        axisState:Add(axisName, 0)
     end
 end
 
@@ -35,13 +68,11 @@ function Input.__inputKey()
     keyState:ForEach(function(keyc, downState)
         if love.keyboard.isDown(keyc) then
             --按下
-            
             if downState == 0 then --刚刚按下
                 keyState[keyc] = 1
             elseif downState == 1 then
                 keyState[keyc] = 2
             end
-            
         else
             --按键已经没有在按下了
             --如果上一帧已经按下 那就修改为弹起
@@ -55,15 +86,11 @@ function Input.__inputKey()
     end)
 end
 
---键盘按下回调
-function Input.keyboardDownEvent(keyCode)
-    
-end
-
 --=-----------------------------------------------------
 
 function Input.__update(dt)
     Input.__inputKey() -- 检测键盘
+    --axis状态
     for key, value in pairs(InputAxis) do
         if Input.GetKey(value.NegativeButton) or Input.GetKey(value.AltNegativeButton) then
             --负方向按住
@@ -76,10 +103,12 @@ function Input.__update(dt)
 end
 
 function Input.GetAxis(axisName)
-    
+    return axisState[axisName]
 end
 
 ---获取按键是否按下
+---@return boolean
+---@param keyCode Key
 function Input.GetKey(keyCode)
     if not keyCode then return false end
     local num = keyState[keyCode]
@@ -89,14 +118,14 @@ end
 
 ---获取按键按下
 ---@return boolean
----@param keyType Key
+---@param keyCode Key
 function Input.GetKeyDown(keyCode)
     return keyState[keyCode] == 1
 end
 
 ---获取按键弹起
 ---@return boolean
----@param keyType Key
+---@param keyCode Key
 function Input.GetKeyUp(keyCode)
     return keyState[keyCode] == 3
 end

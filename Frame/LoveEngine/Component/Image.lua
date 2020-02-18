@@ -19,7 +19,7 @@ end
 
 function Image:__draw()
     if self.sprite then
-        IEngine.DrawImage(self)
+        Camera.RenderImage(self)
     end
 end
 

@@ -3,6 +3,10 @@ local Scene01, base = extends(Scene, "Scene01")
 ---virtual 进入场景
 function Scene:OnEnter()
 
+    local camgo = GameObject.New("mainCamera")
+    local cam = camgo:AddComponent(Camera)
+    cam:SetMainCamera()
+
     love.graphics.setBackgroundColor(50 / 255, 175 / 255, 1)
     love.graphics.setLineWidth(5) 
 
