@@ -3,7 +3,7 @@
 --- Date         : 2020/02/15 23:53
 --- Description  : 按键枚举
 ------------------------------------------------
-local Key = {
+local KeyCode = {
     a = "a",     
     b = "b",     
     c = "c",     
@@ -105,4 +105,4 @@ local Key = {
     mode 	    = "mode",
 }
 
-return Key
+return KeyCode

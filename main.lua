@@ -4,13 +4,14 @@ require "Frame._loader"
 require "Scripts._loader"
 
 function love.load()
+    IEngine.Start()
     Main()
 end
 
 function love.update(dt)
-    SceneManager.__update(dt)
+    IEngine.__update(dt)
 end
 
 function love.draw()
-    IDraw.__draw()
+    IEngine.__draw()
 end

@@ -3,14 +3,23 @@
 --- Date         : 2020/02/15 23:38
 --- Description  : 绘图接口
 ------------------------------------------------
-local IDraw = {}
+local IEngine = {}
 local drawEvent = ArrayList.New()
 
-function IDraw.__draw()
+function IEngine:Start()
+    Input.Init()
+end
+
+function IEngine.__update(dt)
+    Input.__update(dt)
+    SceneManager.__update(dt)
+end
+
+function IEngine.__draw()
     SceneManager.__draw()
 end
 
-function IDraw.DrawImage(image)
+function IEngine.DrawImage(image)
     local transform = image.transform
     local position = transform:GetPosition()
     local rotation = math.rad(transform:GetRotation())
@@ -21,4 +30,4 @@ function IDraw.DrawImage(image)
     love.graphics.draw(image.sprite, position.x, position.y, rotation, scale.x, scale.y)
 end
 
-return IDraw
+return IEngine

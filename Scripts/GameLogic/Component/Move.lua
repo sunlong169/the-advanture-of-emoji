@@ -14,7 +14,7 @@ function Move:Start()
 end
 
 function Move:Update(dt)
-    if Input.GetKeyDown(Key.a) or Input.GetKeyDown(Key.d) then
+    if Input.GetKey(Key.a) or Input.GetKey(Key.d) then
         self.seqImg:Play()
     else
         self.seqImg:Stop()

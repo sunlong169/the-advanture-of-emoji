@@ -1,6 +1,6 @@
 --Interface
-IDraw       = require ("Frame.LoveEngine.Interface.IDraw")
-Key         = require ("Frame.LoveEngine.Interface.Key")
+IEngine     = require ("Frame.LoveEngine.Interface.IEngine")
+KeyCode     = require ("Frame.LoveEngine.Interface.KeyCode")
 Input       = require ("Frame.LoveEngine.Interface.Input")
 IShape      = require ("Frame.LoveEngine.Interface.IShape")
 --LoveEngine
