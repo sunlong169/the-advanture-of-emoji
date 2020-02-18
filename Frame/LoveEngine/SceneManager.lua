@@ -8,9 +8,10 @@ local SceneManager = {}
 --当前场景 extends for Scene
 local m_curScene = nil
 local m_sceneChangeEvents = ArrayList.New()
+local m_camera = nil
 
 function SceneManager.__Init(scenesConfig)
-
+    m_camera = Camera.New()
 end
 ---新建游戏物体
 function SceneManager.NewGameObject(gameObject)

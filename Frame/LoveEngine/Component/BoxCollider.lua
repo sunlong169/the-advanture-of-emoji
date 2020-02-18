@@ -6,21 +6,21 @@
 
 local BoxCollider, base = extends(Component, "BoxCollider")
 
-function BoxCollider:PointConllider(x, y, left, right, top, bottom)
-    if x < 1 or x > right or y < top or y > bottom then
-        return false
-    end
-        return true
-end
+-- function BoxCollider:PointConllider(x, y, left, right, top, bottom)
+--     if x < 1 or x > right or y < top or y > bottom then
+--         return false
+--     end
+--         return true
+-- end
 
-function BoxCollider:BodyConllider(aLeft, aRight, aTop, aBottom, bLeft, bRight, bTop, bBottom)
-    if self.PointConllider(aLeft, aTop, bLeft, bTop, bRight, bBottom)
-    or self.PointConllider(aRight, aTop, bLeft, bTop, bRight, bBottom)
-    or self.PointConllider(aLeft, aBottom, bLeft, bTop, bRight, bBottom)
-    or self.PointConllider(aRight, aBottom, bLeft, bTop, bRight, bBottom) then
-        return true
-    end
-end
+-- function BoxCollider:BodyConllider(aLeft, aRight, aTop, aBottom, bLeft, bRight, bTop, bBottom)
+--     if self.PointConllider(aLeft, aTop, bLeft, bTop, bRight, bBottom)
+--     or self.PointConllider(aRight, aTop, bLeft, bTop, bRight, bBottom)
+--     or self.PointConllider(aLeft, aBottom, bLeft, bTop, bRight, bBottom)
+--     or self.PointConllider(aRight, aBottom, bLeft, bTop, bRight, bBottom) then
+--         return true
+--     end
+-- end
 
 function BoxCollider:Constructor()
     self.layer = nil
@@ -41,6 +41,7 @@ end
 function BoxCollider:__collider(collider)
     local colliderName = collider:GetType():GetName()
     if colliderName == gettype(BoxCollider):GetName() then
+        
         --目标同样也是盒子碰撞
     end
 end
