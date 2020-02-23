@@ -47,25 +47,11 @@ function Camera:__renderImage(image)
     local transPosition = transform:GetPosition()
     local transSize = transform:GetSize()
     local transPivot = transform:GetPivot()
-    --求中心点离右上角点的距离
-    local ruPointX = transPosition.x + transSize.width * (1 - transPivot.x)
-    local ruPointY = transPosition.y - transSize.height * transPivot.y
-    local ruDistance = distance(transPosition.x, transPosition.y, ruPointX, ruPointY)
+    --半径 = 中心点离左上角点的距离
+    local luX = transPosition.x - transSize.width * transPivot.x
+    local luY = transPosition.y - transSize.height * transPivot.y
+    local radius = distance(transPosition.x, transPosition.y, luX, luY)
 
-    --求中心点离右下角点的距离
-    local rdPointX = transPosition.x + transSize.width * (1 - transPivot.x)
-    local rdPointY = transPosition.y + transSize.height * (1 - transPivot.y)
-    local rdDistance = distance(transPosition.x, transPosition.y, rdPointX, rdPointY)
-    --计算最大半径
-    local radius = 0
-
-    Console.WriteLine("ru="..ruDistance.."  rd="..rdDistance)
-    if ruDistance == rdDistance or ruDistance > rdDistance then
-        radius = ruDistance
-    elseif ruDistance < rdDistance then
-        radius = rdDistance
-    end
-    
     local x = transPosition.x
     local y = transPosition.y
 
@@ -74,10 +60,6 @@ function Camera:__renderImage(image)
 
     x = x + radius * math.cos(math.rad(rotation - 90 - 45))
     y = y + radius * math.sin(math.rad(rotation - 90 - 45))
-
-    --按中心点偏移算出真实的左上角坐标
-    x = x - transSize.width * transPivot.x
-    y = y - transSize.height * transPivot.x
 
     IEngine.DrawImage(sprite, x, y, rotation, transSize.width, transSize.height)
 end

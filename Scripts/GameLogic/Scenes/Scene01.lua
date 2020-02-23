@@ -25,7 +25,7 @@ function Scene:OnEnter()
     local img = self.profile:AddComponent(Image)
     img:SetSprite(Assets.LoadSprite("res/image/player/aaa.jpg"))
 
-    self.profile.transform:SetPosition(Point.New(300,300))
+    self.profile.transform:SetPosition(Point.New(0,0))
     self.profile.transform:SetPivot(Point.New(0.5, 0.5))
 
     -- local role = GameObject.New("go11")
