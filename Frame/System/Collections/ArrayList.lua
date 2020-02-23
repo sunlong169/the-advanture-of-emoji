@@ -14,14 +14,6 @@ function ArrayList:Constructor(tb)
     end
 end
 
-function ArrayList:Get(index)
-    return self[index]
-end
-
-function ArrayList:Set(index, value)
-    self[index] = value
-end
-
 function ArrayList:GetCount()
     return #self
 end

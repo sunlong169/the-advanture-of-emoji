@@ -1,142 +1,78 @@
-
+-------------------ModuleInfo-------------------
+--- Author       : jx
+--- Date         : 2020/02/23 19:31
+--- Description  : 有序字典
+------------------------------------------------
 ---@class Dictionary : Object
-local DictionaryOrder = {}
+local Dictionary, base = extends("Dictionary", Object)
 
-
-DictionaryOrder.__index = DictionaryOrder
-
-function DictionaryOrder.New()
-    local temp = {}
-    setmetatable(temp, DictionaryOrder)
-    temp:ctor()
-    return temp
+function Dictionary:Constructor()
+    local meta = getmetatable(self)
+    meta.__meta_index = {}
+    meta.__meta_count = 0
 end
 
+function Dictionary:Add(key, value)
+    local k = rawget(self, key)
+    assert(k == nil, "Existing key "..tostring(key))
 
-
-function DictionaryOrder:ctor()
-    self.Index = {};
-    self.count = 0;
+    self[key] = value
+    local meta = getmetatable(self)
+    meta.__meta_count = meta.__meta_count + 1
+    meta.__meta_index[meta.__meta_count] = key
 end
 
-function DictionaryOrder:ContainsKey(key)
-    if (nil ~= self[key]) then
-        return true;
-    else
-        return false;
-    end
-end
-
---根据KEY返回value
-function DictionaryOrder:GetValueByKey(key)
-    return self[key]
-end
-
-function DictionaryOrder:GetValueByIndex(index)
-    return self[self.Index[index]]
-end
-
-function DictionaryOrder:ContainsValue(value)
-    for i, k in pairs(self.Index) do
-        if (self[k] ~= nil and self[k] == value) then
-            return true;
+local function indexof(table, key)
+    for index, value in ipairs(table) do
+        if value == key then
+            return index
         end
     end
-    return false;
+    return -1
 end
 
- --获得字典的Keys,返回一个Array
- function DictionaryOrder:GetKeys()
-     local array = Array.New();
-     for k, v in ipairs(self.Index) do
-         array:Add(v);
-     end
-     return array;
- end
+function Dictionary:Remove(key)
+    assert(self[key] ~= nil , "key not found")
 
-function DictionaryOrder:GetKeysTable()
-    local array = {}
-    for k, v in ipairs(self.Index) do
-        table.insert(array, v)
-    end
-    return array;
+    local meta = getmetatable(self)
+
+    local index = indexof(meta.__meta_index, key)
+    assert(index ~= -1, "not found")
+
+    table.remove(self.__meta_index, index)
+    self.__meta_count = self.__meta_count - 1;
+    self[key] = nil
 end
 
- --获得字典的Values,返回一个Array
- function DictionaryOrder:GetValues()
-     local array = Array.New();
-     for k, v in ipairs(self.Index) do
-         array:Add(self[v]);
-     end
-     return array;
- end
-
---返回一个value的table
-function DictionaryOrder:GetValuesTable()
-    local array = {}
-    for k, v in ipairs(self.Index) do
-        table.insert(array, self[v])
-    end
-    return array;
-end
---增加
-function DictionaryOrder:Add(key, value)
-    if value == nil then
-        return;
-    end
-    if (nil == self[key]) then
-        self.count = self.count + 1;
-    end
-    self[key] = value;
-    self.Index[self.count] = key
-end
-
---移除
-function DictionaryOrder:Remove(key)
-    if (self[key] ~= nil) then
-        local i = table.indexof(self.Index, key, 1)
-        table.remove(self.Index, i)
-        self.count = self.count - 1;
-        self[key] = nil;
+function Dictionary:Clear()
+    local meta = getmetatable(self)
+    for _, key in ipairs(meta.__meta_index) do
+        self:Remove(key)
     end
 end
 
+function Dictionary:Count()
+    local meta = getmetatable(self)
+    return meta.__meta_count
+end
 
+function Dictionary:ContainsKey(key)
+    return self[key] ~= nil and true or false
+end
 
--- 有序遍历
-function DictionaryOrder:ForEach(fun, ...)
-    --local tempIndex = DeepCopy(self.Index)
+function Dictionary:ForEach(fun)
+    local m = getmetatable(self)
     local tempIndex = {}
-    for i = 1, #self.Index do
-        tempIndex[i] = self.Index[i]
+    --拷贝一份，防止在外面循环时对字典操作可能会出现的错误
+    for i = 1, m.__meta_count do
+        tempIndex[i] = m.__meta_index[i]
     end
-    for k, v in ipairs(tempIndex) do
-        fun(v, self[v], ...);
+    for _, value in ipairs(tempIndex) do
+        fun(value, self[value])
     end
     tempIndex = nil
 end
 
--- 排序
-function DictionaryOrder:Sort(Action)
-    table.sort(self.Index, Action)
-end
-
--- 获取字典的count
-function DictionaryOrder:Count()
-    return self.count;
-end
-
-
-
---清除
-function DictionaryOrder:Clear()
-    self:ForEach(function(k, v)
-        self:Remove(k)
-    end)
-    self.Index = {};
-    self.count = 0;
-end
-
-return DictionaryOrder;
+return Dictionary;
 
 
