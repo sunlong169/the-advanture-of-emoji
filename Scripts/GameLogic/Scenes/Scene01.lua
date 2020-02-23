@@ -1,4 +1,5 @@
-local Scene01, base = extends(Scene, "Scene01")
+---@class Scene01 : Scene
+local Scene01, base = extends("Scene01", Scene)
 
 ---virtual 进入场景
 function Scene:OnEnter()
@@ -12,29 +13,33 @@ function Scene:OnEnter()
 
 
     --背景图
-    local bg = GameObject.New("bg")
-    local bgImg = bg:AddComponent(Image)
-    bgImg:SetSprite(IShape.NewSprite("res/image/stage/test-stage.png"))
-
+    -- local bg = GameObject.New("bg")
+    -- local bgImg = bg:AddComponent(Image)
+    -- bgImg:SetSprite(Assets.LoadSprite("res/image/stage/test-stage.png"))
+    -- bgImg.transform:SetPivot(Point.New(0,0))
     
     --生成玩家实体
     -- EntityMgr:Instance():CreateEntity(EntityType.player)
 
-    local go = GameObject.New("test")
-    local img = go:AddComponent(Image)
-    img:SetSprite(IShape.NewSprite("res/image/player/aaa.jpg"))
+    self.profile = GameObject.New("test")
+    local img = self.profile:AddComponent(Image)
+    img:SetSprite(Assets.LoadSprite("res/image/player/aaa.jpg"))
 
-    go.transform:SetPosition(Point.New(200,120))
+    self.profile.transform:SetPosition(Point.New(300,300))
+    self.profile.transform:SetPivot(Point.New(0.5, 0.5))
 
-    go.transform:SetRotation(90)
+    -- local role = GameObject.New("go11")
+    -- local img2 = role:AddComponent(Image)
+    -- role.transform:SetPosition(90,90)
+    -- img2:SetSprite(Assets.LoadSprite("res/image/player/move1.png"))
 
-    local role = GameObject.New("go11")
-    local img2 = role:AddComponent(Image)
-    role.transform:SetPosition(90,90)
-    img2:SetSprite(IShape.NewSprite("res/image/player/move1.png"))
+    -- role.transform:SetParent(self.profile.transform)
 
-    role.transform:SetParent(go.transform)
+    ---@type Rigidbody
+    self.rigi = self.profile:AddComponent(Rigidbody)
 
+    self.rigi:SetGravity(0)
+    
 end
 ---virtual 离开场景
 function Scene:OnExit()
@@ -42,9 +47,15 @@ function Scene:OnExit()
 end
 ---virtual 帧更新事件，落后于update
 function Scene:LateUpdate(dt)
-    if Input.GetKeyUp(KeyCode.w) then
-        Console.WriteLine(dt)
+    -- if Input.GetKeyUp(KeyCode.w) then
+    --     Console.WriteLine(dt)
+    -- end
+    self.rigi:GetVelocity().x = Input.GetAxis("Horizontal") * 10
+    if Input.GetAxis("Horizontal") ~= 0 then
+        -- Console.WriteLine(Input.GetAxis("Horizontal") * dt)
     end
+
+    self.profile.transform:Rotate(dt*30)
 end
 
 return Scene01

@@ -11,25 +11,29 @@ classType = {
 }
 
 --继承
-function extends(base, className)
+function extends(className, base)
     local class = {}
-    -- assert(type(className) == "string" and #className > 0)
-    --元数据
-    class.__classType  = classType.Class
     --类型
     local _className = "UnknowClass"
     if className ~= "" or className ~= nil then
         _className = className
     end
-    class.__type = Type.New(_className, class)
+    -- class.__type = Type.New(_className, class)
+    local classMeta = {}
+    classMeta.__index = base or Object
+    classMeta.__classType = classType.Class
+    classMeta.__type = Type.New(_className, class)
+    classMeta.__base = base
+    setmetatable(class, classMeta)
 
     --实例化
     class.New = function(...)
-        local base = class.__base
-        local obj = {}
-        --实例元数据
-        obj.__classType = classType.Instance
-        local instanceMetatable = {__index = class}
+
+        local instanceMetatable = {}
+        instanceMetatable.__index = class
+        instanceMetatable.__classType = classType.Instance
+        instanceMetatable.__type = Type.New(_className, class)
+        instanceMetatable.__base = base
         --运算符重载 + - * / = 
         if rawget(class, "operatorAdd") ~= nil then
             instanceMetatable.__add = rawget(class, "operatorAdd")
@@ -55,12 +59,14 @@ function extends(base, className)
             return obj:ToString()
         end
 
+        local obj = {}
         setmetatable(obj, instanceMetatable)
-        --按照继承向上执行构造函数
+        --从基类开始执行构造函数
         local ctor
         ctor = function(b, ...)
-            if b.__base then
-                ctor(b.__base, ...)
+            local mt = getmetatable(b)
+            if mt ~= nil and mt.__base then
+                ctor(mt.__base, ...)
             end
             if b.Constructor then
                 b.Constructor(obj, ...)
@@ -69,30 +75,7 @@ function extends(base, className)
         ctor(obj, ...)
         return obj
     end
-    --接口实现作用于原型类和继承类之间，接口实现会覆盖继承类方法
-    class.implements = function(self, ...)
-        assert(self.__classType == classType.Class, "无法用实例调用此方法")
-        local args = {...}
-        --继承用的元表
-        local originMeta = getmetatable(self)
-        --self要保持顶端
-        local cls = self
-        for index, _class in ipairs(args) do
-            local metaCls = _class
-            setmetatable(cls, metaCls)
-            cls = metaCls
-        end
-        --此时cls成为继承中的最后一个元表，链接继承
-        setmetatable(cls, originMeta )
-        cls.__base = originMeta.__index
-        --原型类链接接口和继承
-        setmetatable(self, { __index = cls })
-        self.__base = cls
-        return self
-    end
 
-    class.__base = base
-    setmetatable(class, {__index = base})
     return class, base
 end
 
@@ -108,8 +91,31 @@ function delete(obj)
 end
 
 ---获取类的类型
-function gettype(v)
-    assert(v ~= nil, "Object nil")
-    assert(v.__classType == classType.Class, "只能对类型进行运算")
-    return v.__type
+---@return Type
+function gettype(class)
+    assert(class ~= nil, "Class nil")
+    local mt = getmetatable(class)
+    assert(mt.__classType == classType.Class, "只能对类型进行运算")
+    return mt.__type
 end
+
+-- function each(enumerator)
+--     local index = 0
+--     local mt = getmetatable(enumerator)
+    
+--     if mt ~= nil and mt.__type then
+--         --对字典特殊迭代
+--         if mt.__type.name == "Dictionary" then
+
+--         end
+
+--     else
+--         --普通迭代器
+--         if #enumerator ~= 0 then
+--             return ipairs
+--         else
+--             return pairs
+--         end
+--     end
+
+-- end

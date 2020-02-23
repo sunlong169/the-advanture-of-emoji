@@ -3,7 +3,8 @@
 --- Date         : 2020/02/16 01:28
 --- Description  : 游戏场景内的实体抽象类
 ------------------------------------------------
-local Entity, base = extends(Object, "Entity")
+---@class Entity : Object
+local Entity, base = extends("Entity", Object)
 
 function Entity:Constructor(id, entitiType)
     self.m_id = id

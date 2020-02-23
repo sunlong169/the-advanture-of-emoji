@@ -20,14 +20,14 @@ function IEngine.__draw()
     SceneManager.__draw()
 end
 
-IEngine.DrawImage = love.graphics.draw
+---@param sprite Sprite
+function IEngine.DrawImage(sprite, x, y, r, width, height)
+    local mWidth = width / sprite.m_imageData:getWidth()
+    local mHeight = height / sprite.m_imageData:getHeight()
+    love.graphics.draw(sprite.m_imageData, x, y, math.rad(r),  mWidth,  mHeight)
+end
+
 IEngine.Print     = love.graphics.print
--- function IEngine.DrawImage(image)
---     local transform = image.transform
---     local position = transform:GetPosition()
---     local rotation = math.rad(transform:GetRotation())
---     local scale    = transform:GetScale()
---     love.graphics.draw(image.sprite, position.x, position.y, rotation, scale.x, scale.y)
--- end
+
 
 return IEngine

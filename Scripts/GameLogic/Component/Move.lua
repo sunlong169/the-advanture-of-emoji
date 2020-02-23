@@ -3,7 +3,8 @@
 --- Date         : 2020/02/16 15:12
 --- Description  : 角色移动示例
 ------------------------------------------------
-local Move, base = extends(Component, "Move")
+---@class Move : Component
+local Move, base = extends("Move", Component)
 
 function Move:Constructor()
 

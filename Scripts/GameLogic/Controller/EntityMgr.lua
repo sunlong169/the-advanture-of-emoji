@@ -10,7 +10,8 @@ EntityType = {
 local EntityClass = {
     player = PlayerEntity,
 }
-local EntityMgr, base = extends(Singleton, "EntityMgr")
+---@class EntityMgr : Singleton
+local EntityMgr, base = extends("EntityMgr", Singleton)
 
 function EntityMgr:Constructor()
     self.m_entities = ArrayList.New()

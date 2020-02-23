@@ -3,7 +3,8 @@
 --- Date         : 2020/02/15 23:45
 --- Description  : 储存位置 旋转 缩放 父对象与子对象等数据
 ------------------------------------------------
-local Transform, base = extends(Component, "Transform")
+---@class Transform : Component
+local Transform, base = extends("Transform", Component)
 
 function Transform:Constructor(gameObject, parent)
     --本地坐标
@@ -11,12 +12,17 @@ function Transform:Constructor(gameObject, parent)
     self.m_rotation = 0
     self.m_scale    = Point.New(1, 1)
 
+    --图片大小
+    self.m_size = Size.New(100, 100)
+    --中心点
+    self.m_pivot = Point.New(0.5, 0.5)
+
     --父对象
     self.parent = parent
     if not self.parent then
         SceneManager.GetRoot():Add(self)
     end
-
+    --子对象列表
     self.m_childList = ArrayList.New()
 end
 
@@ -33,6 +39,37 @@ function Transform:__draw()
         value.gameObject:__draw()
     end
 end
+---设置与获取中心点
+function Transform:SetPivot(value)
+    if value.x < 0 then value.x = 0 end
+    if value.x > 1 then value.x = 1 end
+    if value.y < 0 then value.y = 0 end
+    if value.y > 1 then value.y = 1 end
+    self.m_pivot = value
+end
+function Transform:GetPivot()
+    return self.m_pivot
+end
+
+---设置与获取图片大小
+function Transform:SetSize(value)
+    self.m_size = value
+end
+---@return Size 
+function Transform:GetSize()
+    return self.m_size
+end
+
+---前进的方向 过渡 Translation
+function Transform:Translate(x, y)
+    self.m_position.x = self.m_position.x + x
+    self.m_position.y = self.m_position.y + y
+end
+---旋转角度
+function Transform:Rotate(r)
+    self.m_rotation = self.m_rotation + r
+end
+
 
 ---设置父对象
 ---@param parent Transform 父对象
@@ -73,7 +110,8 @@ function Transform:SetPosition(position, y)
     end
     self.m_position = self.WorldToLocal(self, position)
 end
----获取位置
+
+---@return Point 获取位置
 function Transform:GetPosition()
     return self.LocalToWorld(self, 'position')
 end

@@ -3,7 +3,8 @@
 --- Date         : 2020/02/15 23:53
 --- Description  : 大小类
 ------------------------------------------------
-local Size, base = extends(Object, "Size")
+---@class Size : Object
+local Size, base = extends("Size", Object)
 
 function Size:Constructor(width, height)
     self.width = width or 0

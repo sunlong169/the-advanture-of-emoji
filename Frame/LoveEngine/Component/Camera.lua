@@ -3,7 +3,8 @@
 --- Date         : 2020/02/17 16:55
 --- Description  : 摄像机
 ------------------------------------------------
-local Camera, base = extends(Component, "Camera")
+---@class Camera : Component
+local Camera, base = extends("Camera", Component)
 
 function Camera:Constructor()
     
@@ -29,17 +30,56 @@ function Camera:OnEnable()
 end
 
 function Camera:OnDisable()
+    
+end
 
+local function distance(x1, y1, x2, y2)
+    local x = math.abs(x1 - x2)
+    local y = math.abs(y1 - y2)
+    return math.sqrt((x * x + y * y))
 end
 
 --渲染image组件
+---@param image Image
 function Camera:__renderImage(image)
-    --加摄像机偏移渲染
     local transform = image.transform
-    local position = transform:GetPosition() + self.transform:GetPosition()
-    local rotation = math.rad(transform:GetRotation()) + math.rad(self.transform:GetRotation())
-    local scale    = transform:GetScale() * self.transform:GetScale()
-    IEngine.DrawImage(image.sprite, position.x, position.y, rotation, scale.x, scale.y)
+    local sprite = image:GetSprite()
+    local transPosition = transform:GetPosition()
+    local transSize = transform:GetSize()
+    local transPivot = transform:GetPivot()
+    --求中心点离右上角点的距离
+    local ruPointX = transPosition.x + transSize.width * (1 - transPivot.x)
+    local ruPointY = transPosition.y - transSize.height * transPivot.y
+    local ruDistance = distance(transPosition.x, transPosition.y, ruPointX, ruPointY)
+
+    --求中心点离右下角点的距离
+    local rdPointX = transPosition.x + transSize.width * (1 - transPivot.x)
+    local rdPointY = transPosition.y + transSize.height * (1 - transPivot.y)
+    local rdDistance = distance(transPosition.x, transPosition.y, rdPointX, rdPointY)
+    --计算最大半径
+    local radius = 0
+
+    Console.WriteLine("ru="..ruDistance.."  rd="..rdDistance)
+    if ruDistance == rdDistance or ruDistance > rdDistance then
+        radius = ruDistance
+    elseif ruDistance < rdDistance then
+        radius = rdDistance
+    end
+    
+    local x = transPosition.x
+    local y = transPosition.y
+
+    local rotation = transform:GetRotation() 
+    local scale    = transform:GetScale()
+
+    x = x + radius * math.cos(math.rad(rotation - 90 - 45))
+    y = y + radius * math.sin(math.rad(rotation - 90 - 45))
+
+    --按中心点偏移算出真实的左上角坐标
+    x = x - transSize.width * transPivot.x
+    y = y - transSize.height * transPivot.x
+
+    IEngine.DrawImage(sprite, x, y, rotation, transSize.width, transSize.height)
 end
 
 --设置为主摄像机

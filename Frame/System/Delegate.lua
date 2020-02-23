@@ -3,7 +3,8 @@
 --- Date         : 2020/02/15 23:58
 --- Description  : 委托（函数指针封装）
 ------------------------------------------------
-local Delegate = extends(Object, "Delegate")
+---@class Delegate : Object
+local Delegate = extends("Delegate", Object)
 
 function Delegate:Constructor(obj, methodPointer)
     self.target = obj

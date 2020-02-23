@@ -3,7 +3,8 @@
 --- Date         : 2020/02/15 23:44
 --- Description  : 游戏物体对象
 ------------------------------------------------
-local GameObject, base = extends(Object, "GameObject")
+---@class GameObject : Object
+local GameObject, base = extends("GameObject", Object)
 
 ---获取场景内的物体
 ---@return GameObject
@@ -22,7 +23,7 @@ function GameObject:Constructor(name, parent)
     self.active = true
 
     self.m_componentList = ArrayList.New()
-    self.transform = Transform --此句话仅为了智能提示，没有实际意义
+    ---@type Transform
     self.transform = self:AddComponent(Transform, parent)
 
     SceneManager.NewGameObject(self)
@@ -57,8 +58,8 @@ end
 
 ---添加组件
 function GameObject:AddComponent(componentType, ...)
-    ---@type Type
     local comtype = gettype(componentType)
+    ---@type Component
     local component = comtype:CreateInstance(self, ...)
     self.m_componentList:Add(component)
     return component

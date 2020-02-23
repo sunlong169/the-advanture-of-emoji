@@ -38,7 +38,7 @@ local InputAxis = {
         --重力
         Gravity = 3,
         --灵敏度
-        Sensitivity = 3,
+        Sensitivity = 0.02,
         --翻转
         Invert = false,
         --输入类型
@@ -94,10 +94,24 @@ function Input.__update(dt)
     for key, value in pairs(InputAxis) do
         if Input.GetKey(value.NegativeButton) or Input.GetKey(value.AltNegativeButton) then
             --负方向按住
+            axisState[key] = axisState[key] - value.Sensitivity
+            if axisState[key] <= -1 then axisState[key] = -1 end --小于-1设置为-1
         elseif Input.GetKey(value.PositiveButton) or Input.GetKey(value.AltPositiveButton) then
             --正方向按住
+            axisState[key] = axisState[key] + value.Sensitivity
+            if axisState[key] >= 1 then axisState[key] = 1 end --大于1设置为1
         else
-            --归零
+            --归零 
+            if axisState[key] == 0 then
+
+            elseif math.abs(axisState[key]) < value.Sensitivity then --小于灵敏度直接设置0
+                axisState[key] = 0
+            elseif axisState[key] > 0 then
+                axisState[key] = axisState[key] - value.Sensitivity
+            elseif axisState[key] < 0 then
+                axisState[key] = axisState[key] + value.Sensitivity
+                
+            end
         end
     end
 end

@@ -3,7 +3,8 @@
 --- Date         : 2020/02/16 00:38
 --- Description  : 序列图动画组件
 ------------------------------------------------
-local SeqImage, base = extends(Image, "SeqImage")
+---@class SeqImage : Image
+local SeqImage, base = extends("SeqImage", Image)
 
 function SeqImage:Constructor()
     self.m_sprites = ArrayList.New()

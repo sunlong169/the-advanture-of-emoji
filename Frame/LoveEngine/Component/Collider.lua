@@ -3,8 +3,8 @@
 --- Date         : 2020/02/16 23:01:57
 --- Description  : 碰撞抽象类
 ------------------------------------------------
-
-local Collider, base = extends(Component, "Collider")
+---@class Collider : Component
+local Collider, base = extends("Collider", Component)
 
 function Collider:Constructor()
     self.layer = nil

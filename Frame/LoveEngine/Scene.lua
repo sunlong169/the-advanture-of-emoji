@@ -3,7 +3,8 @@
 --- Date         : 2020/02/15 23:38
 --- Description  : 场景数据
 ------------------------------------------------
-local Scene, base = extends(Object, "Scene")
+---@class Scene : Object
+local Scene, base = extends("Scene", Object)
 
 function Scene:Constructor(name)
     ---场景内所有的游戏物体
@@ -16,7 +17,7 @@ function Scene:Constructor(name)
     --场景内的碰撞信息
     self.m_colliderInfo = ArrayList.New()
     --当前摄像机
-    self.m_camera = Camera --仅为智能提示赋值
+    ---@type Camera
     self.m_camera = nil
 end
 

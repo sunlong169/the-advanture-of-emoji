@@ -3,16 +3,20 @@
 --- Date         : 2020/02/15 23:58
 --- Description  : 所有类的基类
 ------------------------------------------------
-local Object = {
-    __type = Type.New("Object", Object),
-    __classType = classType.Class
-}
-
-function Object:New()
-    self.__classType = classType.Instance
-end
+---@class Object
+local Object = {}
 
 --virtual
+function Object.New()
+    local obj = {}
+    setmetatable(obj, {
+         __index = Object,
+         __type = Type.New("Object", Object),
+         __classType = classType.Instance
+    })
+    return obj
+end
+
 function Object:ToString()
     return "<class: "..self:GetType():GetName()..">"
 end
@@ -35,9 +39,11 @@ function Object:Equals(b, c)
     return b == c
 end
 
+---@return Type
 function Object:GetType()
-    assert(self ~= nil , "该方法为实例方法")
-    return self.__type
+    local meta = getmetatable(self)
+    assert(meta.__classType == classType.Instance , "该方法为实例方法")
+    return meta.__type
 end
 
 return Object

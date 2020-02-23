@@ -3,7 +3,8 @@
 --- Date         : 2020/02/16 00:00
 --- Description  : 数组封装类，可以用lua迭代器访问
 ------------------------------------------------
-local ArrayList, base = extends(Object, "ArrayList")
+---@class ArrayList : Object
+local ArrayList, base = extends("ArrayList", Object)
 
 function ArrayList:Constructor(tb)
     if tb then

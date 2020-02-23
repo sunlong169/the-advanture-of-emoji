@@ -1,4 +1,5 @@
----@class OrderDict
+
+---@class Dictionary : Object
 local DictionaryOrder = {}
 
 

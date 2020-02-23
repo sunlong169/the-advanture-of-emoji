@@ -3,7 +3,8 @@
 --- Date         : 2020/02/15 23:50
 --- Description  : 一个点，常用于位置
 ------------------------------------------------
-local Point, base = extends(Object, "Point")
+---@class Point : Object
+local Point, base = extends("Point", Object)
 
 function Point.One()
     return Point.New(1, 1)
@@ -12,6 +13,14 @@ end
 function Point:Constructor(x, y)
     self.x = x or 0
     self.y = y or 0
+end
+
+---判断距离
+---@return number
+function Point.Distance(a, b)
+    local x = math.abs(a.x - b.x)
+    local y = math.abs(a.y - b.y)
+    return math.sqrt((x * x + y * y))
 end
 
 ---override 重载+

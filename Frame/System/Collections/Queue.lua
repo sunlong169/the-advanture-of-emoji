@@ -1,4 +1,6 @@
-local Queue, base = extends(Object, "Queue")
+
+---@class Queue : Object
+local Queue, base = extends("Queue", Object)
 
 function Queue:Constructor()
     self._list = {}

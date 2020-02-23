@@ -1,7 +1,7 @@
 Type      = require ("Frame.System.Type")
 --SystemClass
-require             ("Frame.System.sysFunction")
 Object   = require  ("Frame.System.Object")
+require             ("Frame.System.sysFunction")
 String   = require  ("Frame.System.String")
 DateTime = require  ("Frame.System.DateTime")
 --subNamespace

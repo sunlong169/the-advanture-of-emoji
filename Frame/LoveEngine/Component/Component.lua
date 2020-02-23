@@ -3,7 +3,8 @@
 --- Date         : 2020/02/15 23:46
 --- Description  : 组件类，所有组件都要继承此类
 ------------------------------------------------
-local Component, base = extends(Object, "Component")
+---@class Component : Object
+local Component, base = extends("Component", Object)
 
 --构造
 function Component:Constructor(gameObject)

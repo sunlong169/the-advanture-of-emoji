@@ -1,4 +1,5 @@
-local Stack = extends(Object, "Stack")
+---@class Stack : Object
+local Stack = extends("Stack", Object)
 
 function Stack:Constructor()
     self._list = {}
