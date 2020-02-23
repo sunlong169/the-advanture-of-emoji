@@ -45,6 +45,26 @@ local InputAxis = {
         Type = InputType.KeyOrMouseButton,
         --鼠标输入类型
         Axis = AxisType.Xaxis
+    },
+    Vertical = {
+        --反向
+        NegativeButton = KeyCode.down,
+        --正向
+        PositiveButton = KeyCode.up,
+        --反向2
+        AltNegativeButton = KeyCode.s,
+        --正向2
+        AltPositiveButton = KeyCode.w,
+        --重力
+        Gravity = 3,
+        --灵敏度
+        Sensitivity = 0.02,
+        --翻转
+        Invert = false,
+        --输入类型
+        Type = InputType.KeyOrMouseButton,
+        --鼠标输入类型
+        Axis = AxisType.Xaxis
     }
 }
 

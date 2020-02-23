@@ -30,7 +30,7 @@ end
 function Rigidbody:Update(dt)
     --速度 重力
     
-    self.transform:Translate(self.m_velocity.x, self.m_velocity.y + self.m_gravity / 10)
+    self.transform:Translate(self.m_velocity.x, -self.m_velocity.y + self.m_gravity / 10)
 end
 
 return Rigidbody

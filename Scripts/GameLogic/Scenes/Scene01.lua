@@ -51,8 +51,9 @@ function Scene:LateUpdate(dt)
     --     Console.WriteLine(dt)
     -- end
     self.rigi:GetVelocity().x = Input.GetAxis("Horizontal") * 10
-    if Input.GetAxis("Horizontal") ~= 0 then
-        -- Console.WriteLine(Input.GetAxis("Horizontal") * dt)
+    self.rigi:GetVelocity().y = Input.GetAxis("Vertical") * 10
+    if Input.GetAxis("Vertical") ~= 0 then
+        Console.WriteLine(Input.GetAxis("Vertical"))
     end
 
     self.profile.transform:Rotate(dt*30)
