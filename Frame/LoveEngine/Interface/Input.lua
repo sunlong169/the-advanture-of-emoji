@@ -13,11 +13,6 @@ local InputType = {
     MouseMovememt = 1,
 }
 
-local MouseCode = {
-    Left = "l",
-    Right = "r",
-    Middle = "m"
-}
 --仅InputType在MouseMovememt时生效
 local AxisType = {
     Xaxis = 0,
@@ -72,6 +67,8 @@ local InputAxis = {
 local keyState = Dictionary.New()
 --记录axis状态
 local axisState = Dictionary.New()
+--记录鼠标状态
+local mouseState = Dictionary.New()
 
 function Input.Init()
     --添加所有按键到按键状态列表，记录是否按下
@@ -81,6 +78,10 @@ function Input.Init()
     for axisName, axis in pairs(InputAxis) do
         axisState:Add(axisName, 0)
     end
+    for mouseName, code in pairs(MouseCode) do
+        mouseState:Add(code, 0)
+    end
+
 end
 
 --监测键盘变动
@@ -103,6 +104,23 @@ function Input.__inputKey()
                 keyState[keyc] = 0
             end
         end
+    end)
+
+    --0 没按下， 1按下触发，2按下，3弹起触发
+    mouseState:ForEach(function(keyc, state)
+         if love.mouse.isDown(keyc) then
+             if state == 0 then
+                mouseState[keyc] = 1
+             elseif state == 1 then
+                mouseState[keyc] = 2
+             end
+         else
+            if state == 1 or state == 2 then
+                mouseState[keyc] = 3
+            elseif state == 3 then
+                mouseState[keyc] = 0
+            end
+         end
     end)
 end
 
@@ -165,18 +183,27 @@ function Input.GetKeyUp(keyCode)
 end
 
 
----获取鼠标按下
+
+
+---获取鼠标是否按下
 ---@return boolean
----@param mouseType number
-function Input.GetMouseDown(mouseType)
-    return love.mouse.isDown(mouseType)
+---@param mouseCode number
+function Input.GetMouseButton(mouseCode)
+    return mouseState[mouseCode] == 1 or mouseState[mouseCode] == 2
 end
 
----获取鼠标弹起
+---获取鼠标触发按下
 ---@return boolean
----@param mouseType number
-function Input.GetMouseUp(mouseType)
+---@param mouseCode number
+function Input.GetMouseButtonDown(mouseCode)
+    return mouseState[mouseCode] == 1
+end
 
+---获取鼠标触发弹起
+---@return boolean
+---@param mouseCode number
+function Input.GetMouseButtonUp(mouseCode)
+    return mouseState[mouseCode] == 3
 end
 
 ---获取鼠标位置

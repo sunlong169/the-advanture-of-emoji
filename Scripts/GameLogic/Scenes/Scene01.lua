@@ -55,7 +55,10 @@ function Scene01:LateUpdate(dt)
     if Input.GetAxis("Vertical") ~= 0 then
         Console.WriteLine(Input.GetAxis("Vertical"))
     end
-
+    if Input.GetMouseButtonDown(MouseCode.Left) then
+        Console.WriteLine(dt)
+    end
+    
     self.profile.transform:Rotate(dt*30)
 end
 

@@ -1,6 +1,7 @@
 --Interface
 IEngine     = require ("Frame.LoveEngine.Interface.IEngine")
 KeyCode     = require ("Frame.LoveEngine.Interface.KeyCode")
+MouseCode   = require ("Frame.LoveEngine.Interface.MouseCode")
 Input       = require ("Frame.LoveEngine.Interface.Input")
 Assets      = require ("Frame.LoveEngine.Interface.Assets")
 --Engine
