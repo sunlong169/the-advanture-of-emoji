@@ -2,7 +2,7 @@
 local Scene01, base = extends("Scene01", Scene)
 
 ---virtual 进入场景
-function Scene:OnEnter()
+function Scene01:OnEnter()
 
     local camgo = GameObject.New("mainCamera")
     local cam = camgo:AddComponent(Camera)
@@ -42,11 +42,11 @@ function Scene:OnEnter()
     
 end
 ---virtual 离开场景
-function Scene:OnExit()
+function Scene01:OnExit()
 
 end
 ---virtual 帧更新事件，落后于update
-function Scene:LateUpdate(dt)
+function Scene01:LateUpdate(dt)
     -- if Input.GetKeyUp(KeyCode.w) then
     --     Console.WriteLine(dt)
     -- end
