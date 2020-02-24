@@ -8,6 +8,13 @@ local Component, base = extends("Component", Object)
 
 --构造
 function Component:Constructor(gameObject)
+
+    ----------------属性------------------
+    ---是否 不允许一个物体上挂载多个相同类型的组件
+    self.DisallowMultipleComponent = false
+    ---挂载组件时需要的前置组件，如没有 则自动添加
+    self.RequireComponent = nil
+    --------------------------------------
     self.m_isInit = false
     self.m_enable = false
 

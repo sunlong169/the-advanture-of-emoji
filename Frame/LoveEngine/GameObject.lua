@@ -57,8 +57,21 @@ function GameObject:__draw()
 end
 
 ---添加组件
+---@return componentType
+---@param componentType Component
 function GameObject:AddComponent(componentType, ...)
     local comtype = gettype(componentType)
+    --添加相同组件的属性
+    if componentType.DisallowMultipleComponent then
+        for i = 1, #self.m_componentList do
+            assert(self.m_componentList[i]:GetType() ~= gettype(componentType), "DisallowMultipleComponent")
+        end
+    end
+    --前置组件
+    if componentType.RequireComponent then
+        self:AddComponent(componentType.RequireComponent)
+    end
+    --创建实例
     ---@type Component
     local component = comtype:CreateInstance(self, ...)
     self.m_componentList:Add(component)

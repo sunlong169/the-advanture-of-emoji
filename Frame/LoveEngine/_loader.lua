@@ -7,6 +7,7 @@ Assets      = require ("Frame.LoveEngine.Interface.Assets")
 --Engine
 Point       = require ("Frame.LoveEngine.Point")
 Size        = require ("Frame.LoveEngine.Size")
+Color       = require ("Frame.LoveEngine.Color")
 Sprite      = require ("Frame.LoveEngine.Sprite")
 Scene       = require ("Frame.LoveEngine.Scene")
 SceneManager= require ("Frame.LoveEngine.SceneManager")

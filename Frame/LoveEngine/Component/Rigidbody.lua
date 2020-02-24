@@ -11,6 +11,8 @@ function Rigidbody:Constructor()
     self.m_gravity = 1
     --速度
     self.m_velocity = Point.New()
+    --接管的碰撞器
+    self.m_collider = nil
 end
 
 function Rigidbody:SetVelocity(value)
@@ -30,7 +32,7 @@ end
 function Rigidbody:Update(dt)
     --速度 重力
     
-    self.transform:Translate(self.m_velocity.x, -self.m_velocity.y + self.m_gravity / 10)
+    self.transform:Translate(self.m_velocity.x, -self.m_velocity.y + self.m_gravity)
 end
 
 return Rigidbody

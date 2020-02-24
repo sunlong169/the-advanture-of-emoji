@@ -99,23 +99,9 @@ function gettype(class)
     return mt.__type
 end
 
--- function each(enumerator)
---     local index = 0
---     local mt = getmetatable(enumerator)
-    
---     if mt ~= nil and mt.__type then
---         --对字典特殊迭代
---         if mt.__type.name == "Dictionary" then
-
---         end
-
---     else
---         --普通迭代器
---         if #enumerator ~= 0 then
---             return ipairs
---         else
---             return pairs
---         end
---     end
-
--- end
+function getclasstype(target)
+    local m = getmetatable(target)
+    if m.__classType then
+        return m.__classType
+    end
+end

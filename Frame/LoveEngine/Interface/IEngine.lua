@@ -29,5 +29,9 @@ end
 
 IEngine.Print     = love.graphics.print
 
+---@param color Color
+function IEngine.SetBackgroundColor(color)
+    love.graphics.setBackgroundColor(color.r, color.g, color.b)
+end
 
 return IEngine

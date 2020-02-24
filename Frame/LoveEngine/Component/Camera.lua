@@ -7,7 +7,7 @@
 local Camera, base = extends("Camera", Component)
 
 function Camera:Constructor()
-    
+    self.m_backgroundColor = Color.Black
 end
 
 --渲染流程
@@ -32,6 +32,15 @@ end
 function Camera:OnDisable()
     
 end
+
+---@param color Color
+function Camera:SetBackgroundColor(color)
+    self.m_backgroundColor = color
+end
+function Camera:GetBackgroundColor()
+    return self.m_backgroundColor
+end
+
 
 local function distance(x1, y1, x2, y2)
     local x = math.abs(x1 - x2)
@@ -61,6 +70,7 @@ function Camera:__renderImage(image)
     x = x + radius * math.cos(math.rad(rotation - 90 - 45))
     y = y + radius * math.sin(math.rad(rotation - 90 - 45))
 
+    IEngine.SetBackgroundColor(self.m_backgroundColor)
     IEngine.DrawImage(sprite, x, y, rotation, transSize.width, transSize.height)
 end
 
