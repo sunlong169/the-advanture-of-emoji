@@ -13,4 +13,22 @@ function Convert.ToString(i)
     return tostring(i)
 end
 
+function Convert:ToBoolean(v)
+    local _type = type(v)
+    if _type == 'nil' then
+        return false
+    elseif _type == 'number' then
+        return v ~= 0
+    elseif _type == 'string' then
+        local t = {
+            ['true'] = true,
+            ['false'] = false,
+        }
+        local str = v:ToLower()
+        return t[str]
+    else
+        error("type error")
+    end
+end
+
 return Convert
