@@ -22,8 +22,7 @@ function extends(className, base)
     local classMeta = {}
     classMeta.__index = base or Object
     classMeta.__classType = classType.Class
-    classMeta.__type = Type.New(_className, class)
-    classMeta.__base = base
+    classMeta.__type = Type.New(_className, class, base)
     setmetatable(class, classMeta)
 
     --实例化
@@ -32,8 +31,6 @@ function extends(className, base)
         local instanceMetatable = {}
         instanceMetatable.__index = class
         instanceMetatable.__classType = classType.Instance
-        instanceMetatable.__type = Type.New(_className, class)
-        instanceMetatable.__base = base
         --运算符重载 + - * / = 
         if rawget(class, "operatorAdd") ~= nil then
             instanceMetatable.__add = rawget(class, "operatorAdd")
@@ -65,10 +62,21 @@ function extends(className, base)
         local ctor
         ctor = function(b, ...)
             local mt = getmetatable(b)
-            if mt ~= nil and mt.__base then
-                ctor(mt.__base, ...)
+            --顶层实例
+            if mt.__classType == classType.Instance then
+                if b.GetType then
+                    local baseProto = b:GetType():GetClass()
+                    ctor(baseProto, ...)
+                    return --构造完毕
+                end
+            else
+                --下层类型
+                local baseProto = mt.__type:GetBaseClass()
+                if baseProto ~= nil then
+                    ctor(baseProto, ...)
+                end
             end
-            if b.Constructor then
+            if rawget(b, "Constructor") then
                 b.Constructor(obj, ...)
             end
         end
@@ -81,12 +89,14 @@ end
 
 ---析构对象
 function delete(obj)
-    local now_base = obj
+    local meta = getmetatable(obj)
+    assert(meta.__classType == classType.Instance, "TypeException")
+    local now_base = meta.__index
     while now_base do
-        if (now_base.Destructor) then
+        if rawget(now_base, "Destructor") then
             now_base:Destructor()
         end
-        now_base = now_base.__base
+        now_base = gettype(now_base):GetBaseClass()
     end
 end
 
@@ -98,12 +108,12 @@ function new(class)
     end
 end
 
----获取类的类型
+---获取类的类型 类似typeof
 ---@return Type
 function gettype(class)
     assert(class ~= nil, "Class nil")
     local mt = getmetatable(class)
-    assert(mt.__classType == classType.Class, "只能对类型进行运算")
+    assert(mt.__classType == classType.Class, "TypeException")
     return mt.__type
 end
 
@@ -113,3 +123,39 @@ function getclasstype(target)
         return m.__classType
     end
 end
+
+---判断实例是否为某类型或某类型的自类
+---@return boolean
+function istype(instance, class)
+    if class == nil then throw(ExceptionType.ArgumentNullException) end
+    assert(class ~= nil , "NullPointerException")
+    if instance == nil then
+        return false
+    end
+
+    local meta = getmetatable(instance)
+    local classMeta = getmetatable(class)
+    if meta.__classType == classType.Instance and 
+    classMeta.__classType == classType.Class then
+        throw(ExceptionType.ArgumentException)
+    end
+
+    local proto = meta.__index
+    while proto do
+        local protoMeta = getmetatable(proto)
+        if protoMeta.__type == classMeta.__type then
+            return true
+        end
+        proto = gettype(proto):GetBaseClass()
+    end
+    return false
+end
+
+---抛出错误
+function throw(exceptionType, msg)
+    msg = msg or String.Empty()
+    error(exceptionType..": "..msg)
+end
+
+
+try = pcall

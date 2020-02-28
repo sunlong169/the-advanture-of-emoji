@@ -8,16 +8,6 @@ local Type = {}
 
 local AllType = {}
 
--- local metaTb = {
---     __eq = function(a, b)
---         return a.name == b.name
---     end,
---     __type = {
---         name = "Type"
---     }
--- }
--- setmetatable(Type, metaTb)
-
 function Type:Constructor(name, protoType)
     self.name = name
     self.protoType = protoType
@@ -39,11 +29,18 @@ function Type:ToString()
     return self.name
 end
 
+function Type:GetBaseClass()
+    return self.__base
+end
 
-function Type.New(name, protoType)
-    if AllType[protoType] ~= nil then
-        return AllType[protoType]
-    end
+function Type:GetClass()
+    return self.protoType
+end
+
+function Type.New(name, protoType, base)
+    -- if AllType[protoType] ~= nil then
+    --     return AllType[protoType]
+    -- end
     local tmp = {}
     tmp.name = name
     tmp.protoType = protoType
@@ -51,9 +48,19 @@ function Type.New(name, protoType)
     tmp.GetName = Type.GetName
     tmp.Equals = Type.Equals
     tmp.ToString = Type.ToString
-
-    AllType[protoType] = tmp
+    tmp.__base = base
+    tmp.GetBaseClass = Type.GetBaseClass
+    tmp.GetClass = Type.GetClass
+    -- AllType[protoType] = tmp
     return tmp
 end
+
+local typeMeta = {
+    __tostring = function(v)
+        return v:ToString()
+    end
+}
+
+setmetatable(Type, typeMeta)
 
 return Type

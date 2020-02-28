@@ -5,13 +5,14 @@
 ------------------------------------------------
 ---@class Object
 local Object = {}
+local objType = Type.New("Object", Object)
 
 --virtual
 function Object.New()
     local obj = {}
     setmetatable(obj, {
          __index = Object,
-         __type = Type.New("Object", Object),
+         __type = objType,
          __classType = classType.Instance
     })
     return obj
@@ -43,7 +44,18 @@ end
 function Object:GetType()
     local meta = getmetatable(self)
     assert(meta.__classType == classType.Instance , "该方法为实例方法")
-    return meta.__type
+    local protometa = getmetatable(meta.__index)
+    return protometa.__type
 end
+
+
+local objmeta = {
+    __classType = classType.Class,
+    __type = objType,
+    __tostring = function(self)
+        return self:ToString()
+    end
+}
+setmetatable(Object, objmeta)
 
 return Object

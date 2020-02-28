@@ -5,6 +5,11 @@
 ------------------------------------------------
 local String = {}
 
+local empty = ""
+function String.Empty()
+    return empty
+end
+
 ---字符串切割
 function String:Split(delimiter)
     local input = tostring(self)

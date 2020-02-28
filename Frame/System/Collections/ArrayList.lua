@@ -13,6 +13,9 @@ function ArrayList:Constructor(tb)
         end
     end
 end
+function ArrayList:Destructor()
+
+end
 
 function ArrayList:GetCount()
     return #self
