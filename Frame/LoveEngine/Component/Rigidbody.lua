@@ -10,7 +10,7 @@ function Rigidbody:Constructor()
     --重力
     self.m_gravity = 1
     --速度
-    self.m_velocity = Point.New()
+    self.m_velocity = Vector2.New()
     --接管的碰撞器
     self.m_collider = nil
 end

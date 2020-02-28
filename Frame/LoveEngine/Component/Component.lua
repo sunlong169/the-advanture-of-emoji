@@ -89,7 +89,7 @@ function Component:OnColliderExit()
 
 end
 ---碰撞穿透悬浮
-function Component:OnColliderOver()
+function Component:OnColliderStay()
 
 end
 

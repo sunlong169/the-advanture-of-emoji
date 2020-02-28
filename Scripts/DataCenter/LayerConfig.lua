@@ -3,10 +3,10 @@ Layer = {
 }
 LayerConfig = {
     default = {
-        default = false,
-        player  = false,
-        build   = false,
-        enemy   = false,
+        default = true,
+        player  = true,
+        build   = true,
+        enemy   = true,
     },
     player = {
         player  = false,

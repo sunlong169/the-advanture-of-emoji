@@ -16,7 +16,7 @@ function Scene01:OnEnter()
     -- local bg = GameObject.New("bg")
     -- local bgImg = bg:AddComponent(Image)
     -- bgImg:SetSprite(Assets.LoadSprite("res/image/stage/test-stage.png"))
-    -- bgImg.transform:SetPivot(Point.New(0,0))
+    -- bgImg.transform:SetPivot(Vector2.New(0,0))
     
     --生成玩家实体
     -- EntityMgr:Instance():CreateEntity(EntityType.player)
@@ -25,8 +25,8 @@ function Scene01:OnEnter()
     local img = self.profile:AddComponent(Image)
     img:SetSprite(Assets.LoadSprite("res/image/player/aaa.jpg"))
 
-    self.profile.transform:SetPosition(Point.New(0,0))
-    self.profile.transform:SetPivot(Point.New(0.5, 0.5))
+    self.profile.transform:SetPosition(Vector2.New(0,0))
+    self.profile.transform:SetPivot(Vector2.New(0.5, 0.5))
 
     -- local role = GameObject.New("go11")
     -- local img2 = role:AddComponent(Image)

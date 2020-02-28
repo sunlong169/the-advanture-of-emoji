@@ -209,7 +209,7 @@ end
 ---获取鼠标位置
 function Input.GetMousePosition()
     local x, y = love.mouse.getPosition()
-    return Point.New(x, y)
+    return Vector2.New(x, y)
 end
 
 return Input

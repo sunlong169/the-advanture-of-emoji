@@ -7,7 +7,8 @@
 local Collider, base = extends("Collider", Component)
 
 function Collider:Constructor()
-    self.layer = nil
+    self.m_layer = nil
+    self.m_isTrigger = false
 end
 ---启用事件
 function Collider:OnEnable()

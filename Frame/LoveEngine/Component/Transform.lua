@@ -8,14 +8,14 @@ local Transform, base = extends("Transform", Component)
 
 function Transform:Constructor(gameObject, parent)
     --本地坐标
-    self.m_position = Point.New()
+    self.m_position = Vector2.New()
     self.m_rotation = 0
-    self.m_scale    = Point.New(1, 1)
+    self.m_scale    = Vector2.New(1, 1)
 
     --图片大小
     self.m_size = Size.New(100, 100)
     --中心点
-    self.m_pivot = Point.New(0.5, 0.5)
+    self.m_pivot = Vector2.New(0.5, 0.5)
 
     --父对象
     self.parent = parent
@@ -106,12 +106,12 @@ end
 ---设置位置
 function Transform:SetPosition(position, y)
     if y then
-        position = Point.New(position, y)
+        position = Vector2.New(position, y)
     end
     self.m_position = self.WorldToLocal(self, position)
 end
 
----@return Point 获取位置
+---@return Vector2 获取位置
 function Transform:GetPosition()
     return self.LocalToWorld(self, 'position')
 end

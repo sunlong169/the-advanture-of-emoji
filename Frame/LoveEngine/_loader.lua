@@ -5,7 +5,7 @@ MouseCode   = require ("Frame.LoveEngine.Interface.MouseCode")
 Input       = require ("Frame.LoveEngine.Interface.Input")
 Assets      = require ("Frame.LoveEngine.Interface.Assets")
 --Engine
-Point       = require ("Frame.LoveEngine.Point")
+Vector2     = require ("Frame.LoveEngine.Vector2")
 Size        = require ("Frame.LoveEngine.Size")
 Color       = require ("Frame.LoveEngine.Color")
 Sprite      = require ("Frame.LoveEngine.Sprite")

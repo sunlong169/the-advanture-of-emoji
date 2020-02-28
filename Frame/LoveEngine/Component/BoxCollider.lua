@@ -9,7 +9,7 @@ local BoxCollider, base = extends("BoxCollider", Component)
 function BoxCollider:Constructor()
     self.layer = nil
     self.size = Size.New()
-    self.offset = Point.New()
+    self.offset = Vector2.New()
 end
 
 function BoxCollider:GetPoints()
