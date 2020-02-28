@@ -90,6 +90,14 @@ function delete(obj)
     end
 end
 
+---实例化关键字 用法：new(类)(构造实参)
+---但还是推荐用 类.New，因为有智能提示
+function new(class)
+    return function(...)
+        return class.New(...)
+    end
+end
+
 ---获取类的类型
 ---@return Type
 function gettype(class)
