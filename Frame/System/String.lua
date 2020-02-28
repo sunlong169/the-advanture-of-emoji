@@ -48,4 +48,34 @@ function String.Format(str, ...)
     end
     return result
 end
+
+function String.Contains(str, pattern)
+	local find_pos_begin, find_pos_end = string.find(str, pattern, 1, true)
+	return find_pos_begin ~= nil
+end
+
+function String.StartsWith(str, start_pattern)
+	plain = plain or true
+	local find_pos_begin, find_pos_end = string.find(str, start_pattern, 1, true)
+	return find_pos_begin == 1
+end
+
+-- 以某个字符串结尾
+function String.EndsWith(str, start_pattern)
+	plain = plain or true
+	local find_pos_begin, find_pos_end = string.find(str, start_pattern, -#start_pattern, true)
+	return find_pos_end == #str
+end
+
+
+string.Split = String.Split
+string.Replace = String.Replace
+string.Trim = String.Trim
+string.ToLower = String.ToLower
+string.ToUpper = String.ToUpper
+string.Format = String.Format
+string.Contains = String.Contains
+string.StartsWith = String.StartsWith
+string.EndsWith = String.EndsWith
+
 return String
