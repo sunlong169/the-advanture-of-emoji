@@ -55,14 +55,12 @@ function String:Contains(pattern)
 end
 
 function String:StartsWith(start_pattern)
-	plain = plain or true
 	local find_pos_begin, find_pos_end = string.find(self, start_pattern, 1, true)
 	return find_pos_begin == 1
 end
 
 -- 以某个字符串结尾
 function String:EndsWith(start_pattern)
-	plain = plain or true
 	local find_pos_begin, find_pos_end = string.find(self, start_pattern, -#start_pattern, true)
 	return find_pos_end == #self
 end
