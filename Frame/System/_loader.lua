@@ -21,7 +21,6 @@ Serialization = require "Frame.System.Runtime.Serialization"
 -- Timer         = require ("Frame.System.Timers.Timer")
 
 --System.Class
-Singleton = require "Frame.System.Singleton"
 Console   = require "Frame.System.Console"
 Delegate  = require "Frame.System.Delegate"
 
