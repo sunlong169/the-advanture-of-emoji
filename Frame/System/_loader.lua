@@ -4,6 +4,8 @@ Type      = require "Frame.System.Type"
 ExceptionType = require "Frame.System.ExceptionType"
 --SystemClass
 Object   = require  "Frame.System.Object"
+BitMath  = require  "Frame.System.BitMath"
+Enum     = require  "Frame.System.Enum"
 String   = require  "Frame.System.String"
 DateTime = require  "Frame.System.DateTime"
 --subNamespace

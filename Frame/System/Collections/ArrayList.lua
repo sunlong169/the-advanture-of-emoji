@@ -80,9 +80,19 @@ function ArrayList:ForEach(func)
     end
 end
 
+function ArrayList:Clone()
+    local new = {}
+    if #self == 0 then return new end
+    for i = 1, #self do
+        new[i] = self[i]
+    end
+    return new
+end
+
 function ArrayList.TableToList(_table)
     local arr = ArrayList.New()
     local meta = getmetatable(arr)
+    arr = nil
     return setmetatable(_table, meta)
 end
 

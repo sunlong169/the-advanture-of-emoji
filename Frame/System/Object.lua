@@ -13,7 +13,7 @@ function Object.New()
     setmetatable(obj, {
          __index = Object,
          __type = objType,
-         __classType = classType.Instance
+         __classType = ClassType.Instance
     })
     return obj
 end
@@ -43,14 +43,14 @@ end
 ---@return Type
 function Object:GetType()
     local meta = getmetatable(self)
-    assert(meta.__classType == classType.Instance , "该方法为实例方法")
+    assert(meta.__classType == ClassType.Instance , "该方法为实例方法")
     local protometa = getmetatable(meta.__index)
     return protometa.__type
 end
 
 
 local objmeta = {
-    __classType = classType.Class,
+    __classType = ClassType.Class,
     __type = objType,
     __tostring = function(self)
         return self:ToString()
